@@ -1,0 +1,4 @@
+/.vs/*
+/obj/*
+/release/chn/*
+/release/eng/*
