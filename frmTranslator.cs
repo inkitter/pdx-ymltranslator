@@ -16,23 +16,41 @@ using System.Collections;
 
 namespace pdx_ymltranslator
 {
-    public partial class Translatorfrm : Form
+    public partial class frmTranslator : Form
     {
-        public Translatorfrm()
+        public frmTranslator()
         {
             InitializeComponent();
         }
 
         private void Mainfrm_Load(object sender, EventArgs e)
         {
+            if (!Directory.Exists("eng\\"))
+            {
+                Directory.CreateDirectory("eng\\");
+            }
+            if (!Directory.Exists("chn\\"))
+            {
+                Directory.CreateDirectory("chn\\");
+            }
             string[] stringList = Directory.GetFiles("eng\\", "*.yml");
 
-            foreach (string str in stringList)
+            if (stringList.Length > 0)
             {
-                FilesListbox.Items.Add(Path.GetFileName(str));
+                foreach (string str in stringList)
+                {
+                    lstFiles.Items.Add(Path.GetFileName(str));
+                }
+                lstFiles.SelectedIndex = 0;
+                //从eng目录读取文件并载入listbox，默认选择第一个文件。
             }
-            FilesListbox.SelectedIndex = 0;
-            //从eng目录读取文件并载入listbox，默认选择第一个文件。
+            else
+            {
+                lstFiles.Items.Add("No YML File in directory");
+                lstFiles.Enabled = false;
+                btnApply.Enabled = false;
+                btnAPItochnBox.Enabled = false;
+            }
         }
 
         private void Mainfrm_FormClosed(object sender, FormClosedEventArgs e)
@@ -47,12 +65,13 @@ namespace pdx_ymltranslator
 
         private void Savebtn_Click(object sender, EventArgs e)
         {
-            int Maxnum = Math.Min(listEng.Count, listChn.Count)-1;
+            int Maxnum = Math.Min(listEng.Count, listChn.Count) - 1;
             for (int id = 0; id < Maxnum; id++)
             {
                 WriteBack(id);
             }
-            File.WriteAllLines("chn\\" + FilesListbox.Text, listChn.ToArray(), Encoding.UTF8);
+            File.WriteAllLines("chn\\" + lstFiles.Text, listChn.ToArray(), Encoding.UTF8);
+            btnSave.Enabled = false;
             // 保存文件
         }
 
@@ -64,8 +83,11 @@ namespace pdx_ymltranslator
 
         private void FilesListbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ReadFile();
-            LoadtoDataGrid();
+            if (lstFiles.Enabled == true)
+            {
+                ReadFile();
+                LoadtoDataGrid();
+            }
         }
 
         private string RexValName(string RegText)
@@ -84,7 +106,7 @@ namespace pdx_ymltranslator
 
         private string RexValue(string RegText)
         {
-            Regex Reggetname = new Regex("(?<=(\\s\")).*?(?=\"$)", RegexOptions.None);
+            Regex Reggetname = new Regex("(?<=(\\s\")).+(?=\")", RegexOptions.None);
             //  "\"(.*?)*\"$"
             string retext = "";
             var matches = Reggetname.Matches(RegText);
@@ -100,11 +122,10 @@ namespace pdx_ymltranslator
 
         private void ReadFile()
         {
-            Logtxtbox.Clear();
-            string EngPath = "eng\\" + FilesListbox.Text;
-            string ChnPath = "chn\\" + FilesListbox.Text;
+            txtLog.Clear();
+            string EngPath = "eng\\" + lstFiles.Text;
+            string ChnPath = "chn\\" + lstFiles.Text;
 
-            string[] str = File.ReadAllLines(EngPath);
             if (!File.Exists(ChnPath))
             {
                 FileStream fs = File.Create(ChnPath);
@@ -112,20 +133,32 @@ namespace pdx_ymltranslator
                 fs.Write(info, 0, info.Length);
                 fs.Close();
             }
-            string[] LinesEng = File.ReadAllLines(EngPath);
-            string[] LinesChn = File.ReadAllLines(ChnPath);
+            // 检测chn文件夹内文件是否存在，不存在则建立。
 
-            listEng = new List<string>(LinesEng);
-            listChn = new List<string>(LinesChn);
+            listEng = new List<string>(File.ReadAllLines(EngPath));
+            listChn = new List<string>(File.ReadAllLines(ChnPath));
             YMLText = new List<YML>();
 
-            for (int i=1;i<listEng.Count;i++)
+            for (int i = 1; i < listEng.Count; i++)
             {
-                YMLText.Add ( new YML {
-                    VName = RexValName(listEng.ElementAt(i)),
-                    VENG = RexValue(listEng.ElementAt(i)),
-                    VCHN = RexValue(listChn.ElementAt(i))
-                });
+                if (i < listChn.Count)
+                {
+                    YMLText.Add(new YML
+                    {
+                        VName = RexValName(listEng.ElementAt(i)),
+                        VENG = RexValue(listEng.ElementAt(i)),
+                        VCHN = RexValue(listChn.ElementAt(i))
+                    });
+                }
+                else
+                {
+                    YMLText.Add(new YML
+                    {
+                        VName = RexValName(listEng.ElementAt(i)),
+                        VENG = RexValue(listEng.ElementAt(i)),
+                        VCHN = "Please use YML merger to merge."
+                    });
+                }
             }
 
             LoadedFileName = EngPath;
@@ -133,21 +166,21 @@ namespace pdx_ymltranslator
 
         private void LoadtoDataGrid()
         {
-            DataGridALL.ClearSelection();
-            DataGridALL.DataSource = YMLText;
-            DataGridALL.Columns[0].Width = 200;
-            DataGridALL.Columns[1].Width = 300;
-            DataGridALL.Columns[2].Width = 300;
-            DataGridALL.Columns[3].Width = 300;
-            foreach (DataGridViewRow row in DataGridALL.Rows)
+            dfData.ClearSelection();
+            dfData.DataSource = YMLText;
+            dfData.Columns[0].Width = 200;
+            dfData.Columns[1].Width = 300;
+            dfData.Columns[2].Width = 300;
+            dfData.Columns[3].Width = 300;
+            foreach (DataGridViewRow row in dfData.Rows)
             {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
             }
         }
-    
+
         private void Showintxt()
         {
-            int id = DataGridALL.CurrentRow.Index;
+            int id = dfData.CurrentRow.Index;
             txtENG.Text = YMLText.ElementAt(id).VENG;
             txtCHN.Text = YMLText.ElementAt(id).VCHN;
             Translatehttp();
@@ -155,16 +188,16 @@ namespace pdx_ymltranslator
 
         private void Applybtn_Click(object sender, EventArgs e)
         {
-            int id = DataGridALL.CurrentRow.Index;
+            int id = dfData.CurrentRow.Index;
             YMLText.ElementAt(id).VCHN = txtCHN.Text;
-            DataGridALL.Refresh();
+            dfData.Refresh();
+            btnSave.Enabled = true;
 
-            
         }
 
         private void DataGridALL_SelectionChanged(object sender, EventArgs e)
         {
-            if (DataGridALL.CurrentRow.Selected==true)
+            if (dfData.CurrentRow.Selected == true)
             {
                 Showintxt();
             }
@@ -172,23 +205,26 @@ namespace pdx_ymltranslator
 
         private async void Translatehttp()
         {
+            btnAPItochnBox.Enabled = false;
             Task<string> RetransText = new Task<string>(RequestText);
             RetransText.Start();
-            Logtxtbox.Text = await RetransText;
+            txtLog.Text = await RetransText;
+            btnAPItochnBox.Enabled = true;
         }
 
         private string RequestText()
         {
             string restring = "Nothing";
 
-            
-            string q = txtENG.Text;
+            if (txtENG.Text != "")
+            {
+                string q = txtENG.Text;
 
-            TranslationResult result = GetTranslationFromBaiduFanyi(q);
-            //var bytes = new WebClient().DownloadData(address);
-            //restring = Encoding.UTF8.GetString(bytes);
+                TranslationResult result = GetTranslationFromBaiduFanyi(q);
+                restring = result.Trans_result[0].Dst;
+            }
 
-            return result.Trans_result[0].Dst; ;
+            return restring;
         }
 
         private static TranslationResult GetTranslationFromBaiduFanyi(string q)
@@ -248,23 +284,96 @@ namespace pdx_ymltranslator
             return sBuilder.ToString();
         }
 
-    }
-    public class Translation
-    {
-        public string Src { get; set; }
-        public string Dst { get; set; }
-    }
+        private void btnAPItochnBox_Click(object sender, EventArgs e)
+        {
+            txtCHN.Text = txtLog.Text;
+        }
 
-    public class TranslationResult
-    {
-        //错误码，翻译结果无法正常返回
-        public string Error_code { get; set; }
-        public string Error_msg { get; set; }
-        public string From { get; set; }
-        public string To { get; set; }
-        public string Query { get; set; }
-        //翻译正确，返回的结果
-        //这里是数组的原因是百度翻译支持多个单词或多段文本的翻译，在发送的字段q中用换行符（\n）分隔
-        public Translation[] Trans_result { get; set; }
+        private void Translatorfrm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && e.Modifiers == Keys.Control)
+            {
+                Applybtn_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
+            {
+                btnAPItochnBox_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.S && e.Modifiers == Keys.Control)
+            {
+                Savebtn_Click(sender, e);
+            }
+        }
+
+        private void txtCHN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((Keys)e.KeyChar == Keys.Enter)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void DataGridALL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtCHN_Enter(object sender, EventArgs e)
+        {
+            txtCHN.SelectAll();
+        }
+
+
+        private void txtCHN_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
+            {
+                txtCHN.SelectAll();
+            }
+        }
+
+        private void txtENG_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
+            {
+                txtENG.SelectAll();
+            }
+        }
+
+        private void Logtxtbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
+            {
+                txtLog.SelectAll();
+            }
+        }
+
+        private void txtENG_DoubleClick(object sender, EventArgs e)
+        {
+            txtENG.SelectAll();
+        }
+
+        private void txtCHN_DoubleClick(object sender, EventArgs e)
+        {
+            txtCHN.SelectAll();
+        }
+
+        private void Logtxtbox_DoubleClick(object sender, EventArgs e)
+        {
+            txtLog.SelectAll();
+        }
+
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("chn\\" + lstFiles.Text);
+        }
+
+        private void btnOpenFileOriginal_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("eng\\" + lstFiles.Text);
+        }
     }
 }
