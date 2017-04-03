@@ -175,6 +175,10 @@ namespace pdx_ymltranslator
             foreach (DataGridViewRow row in dfData.Rows)
             {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
+                if (row.Cells[1].Value.ToString()==row.Cells[2].Value.ToString() && row.Cells[1].Value.ToString()!="")
+                {
+                    row.Cells[2].Style.BackColor = Color.LightCyan;
+                }
             }
         }
 
