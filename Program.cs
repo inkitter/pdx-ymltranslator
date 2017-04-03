@@ -19,15 +19,15 @@ namespace pdx_ymltranslator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmTranslator());
+            Application.Run(new FrmTranslator());
         }
     }
 
     class YML
     {
-        public string VName { get; set; }
         public string VENG { get; set; }
         public string VCHN { get; set; }
+        public string AllENG { get; set; }
         public string VTranslated {
             get
             {
@@ -38,11 +38,12 @@ namespace pdx_ymltranslator
                 }
                 else
                 {
-                    retext = "";
+                    retext = AllENG;
                 }
                 return retext;
             }
         }
+        public string VName { get; set; }
     }
 
     public class Translation

@@ -16,14 +16,19 @@ using System.Collections;
 
 namespace pdx_ymltranslator
 {
-    public partial class frmTranslator : Form
+    public partial class FrmTranslator : Form
     {
-        public frmTranslator()
+        public FrmTranslator()
         {
             InitializeComponent();
         }
 
         private void Mainfrm_Load(object sender, EventArgs e)
+        {
+            FunRefresh();
+        }
+
+        private void FunRefresh()
         {
             if (!Directory.Exists("eng\\"))
             {
@@ -39,17 +44,17 @@ namespace pdx_ymltranslator
             {
                 foreach (string str in stringList)
                 {
-                    lstFiles.Items.Add(Path.GetFileName(str));
+                    LstFiles.Items.Add(Path.GetFileName(str));
                 }
-                lstFiles.SelectedIndex = 0;
+                LstFiles.SelectedIndex = 0;
                 //从eng目录读取文件并载入listbox，默认选择第一个文件。
             }
             else
             {
-                lstFiles.Items.Add("No YML File in directory");
-                lstFiles.Enabled = false;
-                btnApply.Enabled = false;
-                btnAPItochnBox.Enabled = false;
+                LstFiles.Items.Add("No YML File in directory");
+                LstFiles.Enabled = false;
+                BtnApply.Enabled = false;
+                BtnAPItochnBox.Enabled = false;
             }
         }
 
@@ -63,15 +68,15 @@ namespace pdx_ymltranslator
         List<YML> YMLText;
         string LoadedFileName = "";
 
-        private void Savebtn_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             int Maxnum = Math.Min(listEng.Count, listChn.Count) - 1;
             for (int id = 0; id < Maxnum; id++)
             {
                 WriteBack(id);
             }
-            File.WriteAllLines("chn\\" + lstFiles.Text, listChn.ToArray(), Encoding.UTF8);
-            btnSave.Enabled = false;
+            File.WriteAllLines("chn\\" + LstFiles.Text, listChn.ToArray(), Encoding.UTF8);
+            BtnSave.Enabled = false;
             // 保存文件
         }
 
@@ -81,16 +86,16 @@ namespace pdx_ymltranslator
             listChn.RemoveAt(id + 2);
         }
 
-        private void FilesListbox_SelectedIndexChanged(object sender, EventArgs e)
+        private void LstFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstFiles.Enabled == true)
+            if (LstFiles.Enabled == true)
             {
                 ReadFile();
                 LoadtoDataGrid();
             }
         }
 
-        private string RexValName(string RegText)
+        private static string RexValName(string RegText)
         {
             Regex Reggetname = new Regex("(^.*?):.*?(?=\")", RegexOptions.None);
             string retext = "";
@@ -104,7 +109,7 @@ namespace pdx_ymltranslator
         }
         // 根据正则表达式读取":"前的变量名。
 
-        private string RexValue(string RegText)
+        private static string RexValue(string RegText)
         {
             Regex Reggetname = new Regex("(?<=(\\s\")).+(?=\")", RegexOptions.None);
             //  "\"(.*?)*\"$"
@@ -122,9 +127,9 @@ namespace pdx_ymltranslator
 
         private void ReadFile()
         {
-            txtLog.Clear();
-            string EngPath = "eng\\" + lstFiles.Text;
-            string ChnPath = "chn\\" + lstFiles.Text;
+            TxtLog.Clear();
+            string EngPath = "eng\\" + LstFiles.Text;
+            string ChnPath = "chn\\" + LstFiles.Text;
 
             if (!File.Exists(ChnPath))
             {
@@ -139,12 +144,13 @@ namespace pdx_ymltranslator
             listChn = new List<string>(File.ReadAllLines(ChnPath));
             YMLText = new List<YML>();
 
-            for (int i = 1; i < listEng.Count; i++)
+            for (int i = 0; i < listEng.Count; i++)
             {
                 if (i < listChn.Count)
                 {
                     YMLText.Add(new YML
                     {
+                        AllENG = listEng.ElementAt(i),
                         VName = RexValName(listEng.ElementAt(i)),
                         VENG = RexValue(listEng.ElementAt(i)),
                         VCHN = RexValue(listChn.ElementAt(i))
@@ -160,69 +166,74 @@ namespace pdx_ymltranslator
                     });
                 }
             }
-
             LoadedFileName = EngPath;
         }
 
         private void LoadtoDataGrid()
         {
-            dfData.ClearSelection();
-            dfData.DataSource = YMLText;
-            dfData.Columns[0].Width = 200;
-            dfData.Columns[1].Width = 300;
-            dfData.Columns[2].Width = 300;
-            dfData.Columns[3].Width = 300;
-            foreach (DataGridViewRow row in dfData.Rows)
+            DfData.ClearSelection();
+            DfData.DataSource = YMLText;
+            DfData.Columns[0].Width = 200;
+            DfData.Columns[1].Width = 300;
+            DfData.Columns[2].Width = 300;
+            DfData.Columns[3].Width = 300;
+            DfData.Columns[4].Width = 300;
+            DfData.Columns[2].HeaderText = "Original Line";
+            DfData.Columns[0].HeaderText = "FROM";
+            DfData.Columns[1].HeaderText = "TransTo";
+            DfData.Columns[3].HeaderText = "Save Preview";
+            DfData.Columns[4].HeaderText = "Variable Name";
+            foreach (DataGridViewRow row in DfData.Rows)
             {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
-                if (row.Cells[1].Value.ToString()==row.Cells[2].Value.ToString() && row.Cells[1].Value.ToString()!="")
+                if (row.Cells[0].Value.ToString()==row.Cells[1].Value.ToString() && row.Cells[1].Value.ToString()!="")
                 {
-                    row.Cells[2].Style.BackColor = Color.LightCyan;
+                    row.Cells[1].Style.BackColor = Color.LightCyan;
                 }
             }
         }
 
-        private void Showintxt()
-        {
-            int id = dfData.CurrentRow.Index;
-            txtENG.Text = YMLText.ElementAt(id).VENG;
-            txtCHN.Text = YMLText.ElementAt(id).VCHN;
-            Translatehttp();
-        }
-
         private void Applybtn_Click(object sender, EventArgs e)
         {
-            int id = dfData.CurrentRow.Index;
-            YMLText.ElementAt(id).VCHN = txtCHN.Text;
-            dfData.Refresh();
-            btnSave.Enabled = true;
+            int id = DfData.CurrentRow.Index;
+            YMLText.ElementAt(id).VCHN = TxtCHN.Text;
+            DfData.Refresh();
+            BtnSave.Enabled = true;
 
         }
 
         private void DataGridALL_SelectionChanged(object sender, EventArgs e)
         {
-            if (dfData.CurrentRow.Selected == true)
+            if (DfData.CurrentRow.Selected == true)
             {
                 Showintxt();
             }
         }
 
+        private void Showintxt()
+        {
+            int id = DfData.CurrentRow.Index;
+            TxtENG.Text = YMLText.ElementAt(id).VENG;
+            TxtCHN.Text = YMLText.ElementAt(id).VCHN;
+            Translatehttp();
+        }
+
         private async void Translatehttp()
         {
-            btnAPItochnBox.Enabled = false;
+            BtnAPItochnBox.Enabled = false;
             Task<string> RetransText = new Task<string>(RequestText);
             RetransText.Start();
-            txtLog.Text = await RetransText;
-            btnAPItochnBox.Enabled = true;
+            TxtLog.Text = await RetransText;
+            BtnAPItochnBox.Enabled = true;
         }
 
         private string RequestText()
         {
             string restring = "Nothing";
 
-            if (txtENG.Text != "")
+            if (TxtENG.Text != "")
             {
-                string q = txtENG.Text;
+                string q = TxtENG.Text;
 
                 TranslationResult result = GetTranslationFromBaiduFanyi(q);
                 restring = result.Trans_result[0].Dst;
@@ -241,7 +252,7 @@ namespace pdx_ymltranslator
 
             string jsonResult = String.Empty;
             //随机数
-            string randomNum = System.DateTime.Now.Millisecond.ToString();
+            string randomNum = DateTime.Now.Millisecond.ToString();
             //md5加密
             string md5Sign = GetMD5WithString(appID + q + randomNum + password);
             //url
@@ -288,9 +299,9 @@ namespace pdx_ymltranslator
             return sBuilder.ToString();
         }
 
-        private void btnAPItochnBox_Click(object sender, EventArgs e)
+        private void BtnAPItochnBox_Click(object sender, EventArgs e)
         {
-            txtCHN.Text = txtLog.Text;
+            TxtCHN.Text = TxtLog.Text;
         }
 
         private void Translatorfrm_KeyDown(object sender, KeyEventArgs e)
@@ -301,15 +312,15 @@ namespace pdx_ymltranslator
             }
             if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
             {
-                btnAPItochnBox_Click(sender, e);
+                BtnAPItochnBox_Click(sender, e);
             }
             if (e.KeyCode == Keys.S && e.Modifiers == Keys.Control)
             {
-                Savebtn_Click(sender, e);
+                BtnSave_Click(sender, e);
             }
         }
 
-        private void txtCHN_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtCHN_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((Keys)e.KeyChar == Keys.Enter)
             {
@@ -325,25 +336,25 @@ namespace pdx_ymltranslator
             }
         }
 
-        private void txtCHN_Enter(object sender, EventArgs e)
+        private void TxtCHN_Enter(object sender, EventArgs e)
         {
-            txtCHN.SelectAll();
+            TxtCHN.SelectAll();
         }
 
 
-        private void txtCHN_KeyDown(object sender, KeyEventArgs e)
+        private void TxtCHN_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
             {
-                txtCHN.SelectAll();
+                TxtCHN.SelectAll();
             }
         }
 
-        private void txtENG_KeyDown(object sender, KeyEventArgs e)
+        private void TxtENG_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
             {
-                txtENG.SelectAll();
+                TxtENG.SelectAll();
             }
         }
 
@@ -351,33 +362,33 @@ namespace pdx_ymltranslator
         {
             if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
             {
-                txtLog.SelectAll();
+                TxtLog.SelectAll();
             }
         }
 
-        private void txtENG_DoubleClick(object sender, EventArgs e)
+        private void TxtENG_DoubleClick(object sender, EventArgs e)
         {
-            txtENG.SelectAll();
+            TxtENG.SelectAll();
         }
 
-        private void txtCHN_DoubleClick(object sender, EventArgs e)
+        private void TxtCHN_DoubleClick(object sender, EventArgs e)
         {
-            txtCHN.SelectAll();
+            TxtCHN.SelectAll();
         }
 
         private void Logtxtbox_DoubleClick(object sender, EventArgs e)
         {
-            txtLog.SelectAll();
+            TxtLog.SelectAll();
         }
 
-        private void btnOpenFile_Click(object sender, EventArgs e)
+        private void BtnOpenFile_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("chn\\" + lstFiles.Text);
+            System.Diagnostics.Process.Start("chn\\" + LstFiles.Text);
         }
 
-        private void btnOpenFileOriginal_Click(object sender, EventArgs e)
+        private void BtnOpenFileOriginal_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("eng\\" + lstFiles.Text);
+            System.Diagnostics.Process.Start("eng\\" + LstFiles.Text);
         }
     }
 }

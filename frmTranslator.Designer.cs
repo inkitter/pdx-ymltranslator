@@ -1,6 +1,6 @@
 ﻿namespace pdx_ymltranslator
 {
-    partial class frmTranslator
+    partial class FrmTranslator
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -30,78 +30,78 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTranslator));
-            this.txtLog = new System.Windows.Forms.TextBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.lstFiles = new System.Windows.Forms.ListBox();
-            this.labFROM = new System.Windows.Forms.Label();
-            this.labTo = new System.Windows.Forms.Label();
-            this.dfData = new System.Windows.Forms.DataGridView();
-            this.txtENG = new System.Windows.Forms.TextBox();
-            this.txtCHN = new System.Windows.Forms.TextBox();
-            this.btnApply = new System.Windows.Forms.Button();
-            this.labAPI = new System.Windows.Forms.Label();
-            this.btnAPItochnBox = new System.Windows.Forms.Button();
-            this.btnOpenFileTranslated = new System.Windows.Forms.Button();
-            this.btnOpenFileOriginal = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dfData)).BeginInit();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTranslator));
+            this.TxtLog = new System.Windows.Forms.TextBox();
+            this.BtnSave = new System.Windows.Forms.Button();
+            this.LstFiles = new System.Windows.Forms.ListBox();
+            this.LabFROM = new System.Windows.Forms.Label();
+            this.LabTo = new System.Windows.Forms.Label();
+            this.DfData = new System.Windows.Forms.DataGridView();
+            this.TxtENG = new System.Windows.Forms.TextBox();
+            this.TxtCHN = new System.Windows.Forms.TextBox();
+            this.BtnApply = new System.Windows.Forms.Button();
+            this.LabAPI = new System.Windows.Forms.Label();
+            this.BtnAPItochnBox = new System.Windows.Forms.Button();
+            this.BtnOpenFileTranslated = new System.Windows.Forms.Button();
+            this.BtnOpenFileOriginal = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.DfData)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtLog
+            // TxtLog
             // 
-            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtLog.Location = new System.Drawing.Point(12, 715);
-            this.txtLog.Multiline = true;
-            this.txtLog.Name = "txtLog";
-            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(888, 77);
-            this.txtLog.TabIndex = 3;
-            this.txtLog.DoubleClick += new System.EventHandler(this.Logtxtbox_DoubleClick);
-            this.txtLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Logtxtbox_KeyDown);
+            this.TxtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.TxtLog.Location = new System.Drawing.Point(12, 715);
+            this.TxtLog.Multiline = true;
+            this.TxtLog.Name = "TxtLog";
+            this.TxtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TxtLog.Size = new System.Drawing.Size(888, 77);
+            this.TxtLog.TabIndex = 3;
+            this.TxtLog.DoubleClick += new System.EventHandler(this.Logtxtbox_DoubleClick);
+            this.TxtLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Logtxtbox_KeyDown);
             // 
-            // btnSave
+            // BtnSave
             // 
-            this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(988, 757);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(97, 34);
-            this.btnSave.TabIndex = 2;
-            this.btnSave.Text = "Save (Ctrl+S)";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.Savebtn_Click);
+            this.BtnSave.Enabled = false;
+            this.BtnSave.Location = new System.Drawing.Point(988, 757);
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(97, 34);
+            this.BtnSave.TabIndex = 2;
+            this.BtnSave.Text = "Save (Ctrl+S)";
+            this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
-            // lstFiles
+            // LstFiles
             // 
-            this.lstFiles.FormattingEnabled = true;
-            this.lstFiles.ItemHeight = 12;
-            this.lstFiles.Location = new System.Drawing.Point(12, 6);
-            this.lstFiles.Name = "lstFiles";
-            this.lstFiles.Size = new System.Drawing.Size(184, 532);
-            this.lstFiles.TabIndex = 4;
-            this.lstFiles.TabStop = false;
-            this.lstFiles.SelectedIndexChanged += new System.EventHandler(this.FilesListbox_SelectedIndexChanged);
+            this.LstFiles.FormattingEnabled = true;
+            this.LstFiles.ItemHeight = 12;
+            this.LstFiles.Location = new System.Drawing.Point(12, 6);
+            this.LstFiles.Name = "LstFiles";
+            this.LstFiles.Size = new System.Drawing.Size(184, 532);
+            this.LstFiles.TabIndex = 4;
+            this.LstFiles.TabStop = false;
+            this.LstFiles.SelectedIndexChanged += new System.EventHandler(this.LstFiles_SelectedIndexChanged);
             // 
-            // labFROM
+            // LabFROM
             // 
-            this.labFROM.AutoSize = true;
-            this.labFROM.Location = new System.Drawing.Point(906, 550);
-            this.labFROM.Name = "labFROM";
-            this.labFROM.Size = new System.Drawing.Size(29, 12);
-            this.labFROM.TabIndex = 6;
-            this.labFROM.Text = "FROM";
+            this.LabFROM.AutoSize = true;
+            this.LabFROM.Location = new System.Drawing.Point(906, 550);
+            this.LabFROM.Name = "LabFROM";
+            this.LabFROM.Size = new System.Drawing.Size(29, 12);
+            this.LabFROM.TabIndex = 6;
+            this.LabFROM.Text = "FROM";
             // 
-            // labTo
+            // LabTo
             // 
-            this.labTo.AutoSize = true;
-            this.labTo.Location = new System.Drawing.Point(906, 635);
-            this.labTo.Name = "labTo";
-            this.labTo.Size = new System.Drawing.Size(53, 12);
-            this.labTo.TabIndex = 7;
-            this.labTo.Text = "Trans To";
+            this.LabTo.AutoSize = true;
+            this.LabTo.Location = new System.Drawing.Point(906, 635);
+            this.LabTo.Name = "LabTo";
+            this.LabTo.Size = new System.Drawing.Size(53, 12);
+            this.LabTo.TabIndex = 7;
+            this.LabTo.Text = "Trans To";
             // 
-            // dfData
+            // DfData
             // 
-            this.dfData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.DfData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -111,14 +111,14 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dfData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dfData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dfData.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dfData.Location = new System.Drawing.Point(202, 6);
-            this.dfData.MultiSelect = false;
-            this.dfData.Name = "dfData";
-            this.dfData.ReadOnly = true;
-            this.dfData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.DfData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.DfData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.DfData.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.DfData.Location = new System.Drawing.Point(202, 6);
+            this.DfData.MultiSelect = false;
+            this.DfData.Name = "DfData";
+            this.DfData.ReadOnly = true;
+            this.DfData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -128,142 +128,142 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dfData.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dfData.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader;
-            this.dfData.RowTemplate.Height = 23;
-            this.dfData.RowTemplate.ReadOnly = true;
-            this.dfData.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dfData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dfData.Size = new System.Drawing.Size(880, 532);
-            this.dfData.TabIndex = 1;
-            this.dfData.SelectionChanged += new System.EventHandler(this.DataGridALL_SelectionChanged);
-            this.dfData.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridALL_KeyDown);
+            this.DfData.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.DfData.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader;
+            this.DfData.RowTemplate.Height = 23;
+            this.DfData.RowTemplate.ReadOnly = true;
+            this.DfData.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.DfData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DfData.Size = new System.Drawing.Size(880, 532);
+            this.DfData.TabIndex = 1;
+            this.DfData.SelectionChanged += new System.EventHandler(this.DataGridALL_SelectionChanged);
+            this.DfData.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridALL_KeyDown);
             // 
-            // txtENG
+            // TxtENG
             // 
-            this.txtENG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtENG.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtENG.Location = new System.Drawing.Point(12, 549);
-            this.txtENG.Multiline = true;
-            this.txtENG.Name = "txtENG";
-            this.txtENG.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtENG.Size = new System.Drawing.Size(888, 77);
-            this.txtENG.TabIndex = 9;
-            this.txtENG.TabStop = false;
-            this.txtENG.DoubleClick += new System.EventHandler(this.txtENG_DoubleClick);
-            this.txtENG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtENG_KeyDown);
+            this.TxtENG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.TxtENG.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TxtENG.Location = new System.Drawing.Point(12, 549);
+            this.TxtENG.Multiline = true;
+            this.TxtENG.Name = "TxtENG";
+            this.TxtENG.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TxtENG.Size = new System.Drawing.Size(888, 77);
+            this.TxtENG.TabIndex = 9;
+            this.TxtENG.TabStop = false;
+            this.TxtENG.DoubleClick += new System.EventHandler(this.TxtENG_DoubleClick);
+            this.TxtENG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtENG_KeyDown);
             // 
-            // txtCHN
+            // TxtCHN
             // 
-            this.txtCHN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtCHN.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtCHN.Location = new System.Drawing.Point(12, 632);
-            this.txtCHN.Multiline = true;
-            this.txtCHN.Name = "txtCHN";
-            this.txtCHN.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCHN.Size = new System.Drawing.Size(888, 77);
-            this.txtCHN.TabIndex = 2;
-            this.txtCHN.DoubleClick += new System.EventHandler(this.txtCHN_DoubleClick);
-            this.txtCHN.Enter += new System.EventHandler(this.txtCHN_Enter);
-            this.txtCHN.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCHN_KeyDown);
-            this.txtCHN.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCHN_KeyPress);
+            this.TxtCHN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.TxtCHN.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.TxtCHN.Location = new System.Drawing.Point(12, 632);
+            this.TxtCHN.Multiline = true;
+            this.TxtCHN.Name = "TxtCHN";
+            this.TxtCHN.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TxtCHN.Size = new System.Drawing.Size(888, 77);
+            this.TxtCHN.TabIndex = 2;
+            this.TxtCHN.DoubleClick += new System.EventHandler(this.TxtCHN_DoubleClick);
+            this.TxtCHN.Enter += new System.EventHandler(this.TxtCHN_Enter);
+            this.TxtCHN.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtCHN_KeyDown);
+            this.TxtCHN.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtCHN_KeyPress);
             // 
-            // btnApply
+            // BtnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(906, 656);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(94, 34);
-            this.btnApply.TabIndex = 0;
-            this.btnApply.Text = "Apply (Ctrl+Enter)";
-            this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.Applybtn_Click);
+            this.BtnApply.Location = new System.Drawing.Point(906, 656);
+            this.BtnApply.Name = "BtnApply";
+            this.BtnApply.Size = new System.Drawing.Size(94, 34);
+            this.BtnApply.TabIndex = 0;
+            this.BtnApply.Text = "Apply (Ctrl+Enter)";
+            this.BtnApply.UseVisualStyleBackColor = true;
+            this.BtnApply.Click += new System.EventHandler(this.Applybtn_Click);
             // 
-            // labAPI
+            // LabAPI
             // 
-            this.labAPI.AutoSize = true;
-            this.labAPI.Location = new System.Drawing.Point(904, 777);
-            this.labAPI.Name = "labAPI";
-            this.labAPI.Size = new System.Drawing.Size(59, 12);
-            this.labAPI.TabIndex = 12;
-            this.labAPI.Text = "Baidu API";
+            this.LabAPI.AutoSize = true;
+            this.LabAPI.Location = new System.Drawing.Point(904, 777);
+            this.LabAPI.Name = "LabAPI";
+            this.LabAPI.Size = new System.Drawing.Size(59, 12);
+            this.LabAPI.TabIndex = 12;
+            this.LabAPI.Text = "Baidu API";
             // 
-            // btnAPItochnBox
+            // BtnAPItochnBox
             // 
-            this.btnAPItochnBox.Location = new System.Drawing.Point(906, 700);
-            this.btnAPItochnBox.Name = "btnAPItochnBox";
-            this.btnAPItochnBox.Size = new System.Drawing.Size(94, 34);
-            this.btnAPItochnBox.TabIndex = 13;
-            this.btnAPItochnBox.Text = "Copy(Ctrl+↑)";
-            this.btnAPItochnBox.UseVisualStyleBackColor = true;
-            this.btnAPItochnBox.Click += new System.EventHandler(this.btnAPItochnBox_Click);
+            this.BtnAPItochnBox.Location = new System.Drawing.Point(906, 700);
+            this.BtnAPItochnBox.Name = "BtnAPItochnBox";
+            this.BtnAPItochnBox.Size = new System.Drawing.Size(94, 34);
+            this.BtnAPItochnBox.TabIndex = 13;
+            this.BtnAPItochnBox.Text = "Copy(Ctrl+↑)";
+            this.BtnAPItochnBox.UseVisualStyleBackColor = true;
+            this.BtnAPItochnBox.Click += new System.EventHandler(this.BtnAPItochnBox_Click);
             // 
-            // btnOpenFileTranslated
+            // BtnOpenFileTranslated
             // 
-            this.btnOpenFileTranslated.Location = new System.Drawing.Point(979, 592);
-            this.btnOpenFileTranslated.Name = "btnOpenFileTranslated";
-            this.btnOpenFileTranslated.Size = new System.Drawing.Size(103, 34);
-            this.btnOpenFileTranslated.TabIndex = 14;
-            this.btnOpenFileTranslated.Text = "Open Translated";
-            this.btnOpenFileTranslated.UseVisualStyleBackColor = true;
-            this.btnOpenFileTranslated.Click += new System.EventHandler(this.btnOpenFile_Click);
+            this.BtnOpenFileTranslated.Location = new System.Drawing.Point(979, 592);
+            this.BtnOpenFileTranslated.Name = "BtnOpenFileTranslated";
+            this.BtnOpenFileTranslated.Size = new System.Drawing.Size(103, 34);
+            this.BtnOpenFileTranslated.TabIndex = 14;
+            this.BtnOpenFileTranslated.Text = "Open Translated";
+            this.BtnOpenFileTranslated.UseVisualStyleBackColor = true;
+            this.BtnOpenFileTranslated.Click += new System.EventHandler(this.BtnOpenFile_Click);
             // 
-            // btnOpenFileOriginal
+            // BtnOpenFileOriginal
             // 
-            this.btnOpenFileOriginal.Location = new System.Drawing.Point(979, 552);
-            this.btnOpenFileOriginal.Name = "btnOpenFileOriginal";
-            this.btnOpenFileOriginal.Size = new System.Drawing.Size(103, 34);
-            this.btnOpenFileOriginal.TabIndex = 15;
-            this.btnOpenFileOriginal.Text = "Open Original";
-            this.btnOpenFileOriginal.UseVisualStyleBackColor = true;
-            this.btnOpenFileOriginal.Click += new System.EventHandler(this.btnOpenFileOriginal_Click);
+            this.BtnOpenFileOriginal.Location = new System.Drawing.Point(979, 552);
+            this.BtnOpenFileOriginal.Name = "BtnOpenFileOriginal";
+            this.BtnOpenFileOriginal.Size = new System.Drawing.Size(103, 34);
+            this.BtnOpenFileOriginal.TabIndex = 15;
+            this.BtnOpenFileOriginal.Text = "Open Original";
+            this.BtnOpenFileOriginal.UseVisualStyleBackColor = true;
+            this.BtnOpenFileOriginal.Click += new System.EventHandler(this.BtnOpenFileOriginal_Click);
             // 
-            // frmTranslator
+            // FrmTranslator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1089, 794);
-            this.Controls.Add(this.btnOpenFileOriginal);
-            this.Controls.Add(this.btnOpenFileTranslated);
-            this.Controls.Add(this.btnAPItochnBox);
-            this.Controls.Add(this.labAPI);
-            this.Controls.Add(this.btnApply);
-            this.Controls.Add(this.txtCHN);
-            this.Controls.Add(this.txtENG);
-            this.Controls.Add(this.dfData);
-            this.Controls.Add(this.labTo);
-            this.Controls.Add(this.labFROM);
-            this.Controls.Add(this.lstFiles);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtLog);
+            this.Controls.Add(this.BtnOpenFileOriginal);
+            this.Controls.Add(this.BtnOpenFileTranslated);
+            this.Controls.Add(this.BtnAPItochnBox);
+            this.Controls.Add(this.LabAPI);
+            this.Controls.Add(this.BtnApply);
+            this.Controls.Add(this.TxtCHN);
+            this.Controls.Add(this.TxtENG);
+            this.Controls.Add(this.DfData);
+            this.Controls.Add(this.LabTo);
+            this.Controls.Add(this.LabFROM);
+            this.Controls.Add(this.LstFiles);
+            this.Controls.Add(this.BtnSave);
+            this.Controls.Add(this.TxtLog);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "frmTranslator";
+            this.Name = "FrmTranslator";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PDX Game YML Merger";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Mainfrm_FormClosed);
             this.Load += new System.EventHandler(this.Mainfrm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Translatorfrm_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.dfData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DfData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox txtLog;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.ListBox lstFiles;
-        private System.Windows.Forms.Label labFROM;
-        private System.Windows.Forms.Label labTo;
-        private System.Windows.Forms.DataGridView dfData;
-        private System.Windows.Forms.TextBox txtENG;
-        private System.Windows.Forms.TextBox txtCHN;
-        private System.Windows.Forms.Button btnApply;
-        private System.Windows.Forms.Label labAPI;
-        private System.Windows.Forms.Button btnAPItochnBox;
-        private System.Windows.Forms.Button btnOpenFileTranslated;
-        private System.Windows.Forms.Button btnOpenFileOriginal;
+        private System.Windows.Forms.TextBox TxtLog;
+        private System.Windows.Forms.Button BtnSave;
+        private System.Windows.Forms.ListBox LstFiles;
+        private System.Windows.Forms.Label LabFROM;
+        private System.Windows.Forms.Label LabTo;
+        private System.Windows.Forms.DataGridView DfData;
+        private System.Windows.Forms.TextBox TxtENG;
+        private System.Windows.Forms.TextBox TxtCHN;
+        private System.Windows.Forms.Button BtnApply;
+        private System.Windows.Forms.Label LabAPI;
+        private System.Windows.Forms.Button BtnAPItochnBox;
+        private System.Windows.Forms.Button BtnOpenFileTranslated;
+        private System.Windows.Forms.Button BtnOpenFileOriginal;
     }
 }
 

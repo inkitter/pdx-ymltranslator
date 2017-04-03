@@ -1,7 +1,5 @@
 rd chn /s/q
 rd eng /s/q
 
-md chn
-md eng
-
-copy "E:\HOI4eng\air_l_english.yml" "eng\air_l_english.yml" /Y
+mklink /j chn "D:\git\hoi4mcn\chn"
+mklink /j eng "D:\git\hoi4mcn\eng"
