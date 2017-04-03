@@ -82,8 +82,8 @@ namespace pdx_ymltranslator
 
         private void WriteBack(int id)
         {
-            listChn.Insert(id + 1, YMLText.ElementAt(id).VTranslated);
-            listChn.RemoveAt(id + 2);
+            listChn.Insert(id, YMLText.ElementAt(id).VTranslated);
+            listChn.RemoveAt(id + 1);
         }
 
         private void LstFiles_SelectedIndexChanged(object sender, EventArgs e)
