@@ -321,5 +321,76 @@ namespace pdx_ymltranslator
                 YMLTools.TranslationBrowser(TxtENG.Text, "Google");
             }
         }
+        private void FuncInsertSign(string SignToInsert)
+        {
+            if (TxtCHN.SelectedText == "")
+            {
+                TxtCHN.SelectedText = "§"+ SignToInsert;
+            }
+            else
+            {
+                TxtCHN.SelectedText = "§"+ SignToInsert + TxtCHN.SelectedText + "§!";
+            }
+        }
+
+        private void LabColorR_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("R");
+        }
+
+        private void LabColorG_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("G");
+        }
+
+        private void LabColorB_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("B");
+        }
+
+        private void LabColorH_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("H");
+        }
+
+        private void LabColorL_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("L");
+        }
+
+        private void LabColorS_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("S");
+        }
+
+        private void LabColorM_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("M");
+        }
+
+        private void LabColorGx_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("g");
+        }
+
+        private void LabColorW_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("W");
+        }
+
+        private void LabColorY_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("Y");
+        }
+
+        private void LabColorE_Click(object sender, EventArgs e)
+        {
+            FuncInsertSign("E");
+        }
+
+        private void LabColorEnd_Click(object sender, EventArgs e)
+        {
+            TxtCHN.SelectedText = "§!";
+        }
     }
 }

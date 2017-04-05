@@ -47,7 +47,21 @@
             this.BtnOpenBrowser = new System.Windows.Forms.Button();
             this.RadioGoogle = new System.Windows.Forms.RadioButton();
             this.RadioBaidu = new System.Windows.Forms.RadioButton();
+            this.LabColorR = new System.Windows.Forms.Label();
+            this.LabColorG = new System.Windows.Forms.Label();
+            this.LabColorH = new System.Windows.Forms.Label();
+            this.LabColorW = new System.Windows.Forms.Label();
+            this.LabColorL = new System.Windows.Forms.Label();
+            this.LabColorGx = new System.Windows.Forms.Label();
+            this.LabColorB = new System.Windows.Forms.Label();
+            this.LabColorM = new System.Windows.Forms.Label();
+            this.LabColorY = new System.Windows.Forms.Label();
+            this.LabColorE = new System.Windows.Forms.Label();
+            this.LabColorS = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LabColorEnd = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DfData)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // TxtLog
@@ -260,11 +274,195 @@
             this.RadioBaidu.Text = "Baidu";
             this.RadioBaidu.UseVisualStyleBackColor = true;
             // 
+            // LabColorR
+            // 
+            this.LabColorR.AutoSize = true;
+            this.LabColorR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(86)))), ((int)(((byte)(70)))));
+            this.LabColorR.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorR.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorR.Location = new System.Drawing.Point(4, 14);
+            this.LabColorR.Name = "LabColorR";
+            this.LabColorR.Size = new System.Drawing.Size(14, 14);
+            this.LabColorR.TabIndex = 21;
+            this.LabColorR.Text = "R";
+            this.LabColorR.Click += new System.EventHandler(this.LabColorR_Click);
+            // 
+            // LabColorG
+            // 
+            this.LabColorG.AutoSize = true;
+            this.LabColorG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(225)))), ((int)(((byte)(38)))));
+            this.LabColorG.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorG.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorG.Location = new System.Drawing.Point(21, 14);
+            this.LabColorG.Name = "LabColorG";
+            this.LabColorG.Size = new System.Drawing.Size(14, 14);
+            this.LabColorG.TabIndex = 22;
+            this.LabColorG.Text = "G";
+            this.LabColorG.Click += new System.EventHandler(this.LabColorG_Click);
+            // 
+            // LabColorH
+            // 
+            this.LabColorH.AutoSize = true;
+            this.LabColorH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(170)))), ((int)(((byte)(41)))));
+            this.LabColorH.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorH.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorH.Location = new System.Drawing.Point(55, 14);
+            this.LabColorH.Name = "LabColorH";
+            this.LabColorH.Size = new System.Drawing.Size(14, 14);
+            this.LabColorH.TabIndex = 23;
+            this.LabColorH.Text = "H";
+            this.LabColorH.Click += new System.EventHandler(this.LabColorH_Click);
+            // 
+            // LabColorW
+            // 
+            this.LabColorW.AutoSize = true;
+            this.LabColorW.BackColor = System.Drawing.Color.White;
+            this.LabColorW.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorW.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorW.Location = new System.Drawing.Point(38, 31);
+            this.LabColorW.Name = "LabColorW";
+            this.LabColorW.Size = new System.Drawing.Size(14, 14);
+            this.LabColorW.TabIndex = 24;
+            this.LabColorW.Text = "W";
+            this.LabColorW.Click += new System.EventHandler(this.LabColorW_Click);
+            // 
+            // LabColorL
+            // 
+            this.LabColorL.AutoSize = true;
+            this.LabColorL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(195)))), ((int)(((byte)(176)))), ((int)(((byte)(145)))));
+            this.LabColorL.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorL.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorL.Location = new System.Drawing.Point(72, 14);
+            this.LabColorL.Name = "LabColorL";
+            this.LabColorL.Size = new System.Drawing.Size(14, 14);
+            this.LabColorL.TabIndex = 25;
+            this.LabColorL.Text = "L";
+            this.LabColorL.Click += new System.EventHandler(this.LabColorL_Click);
+            // 
+            // LabColorGx
+            // 
+            this.LabColorGx.AutoSize = true;
+            this.LabColorGx.BackColor = System.Drawing.Color.Gray;
+            this.LabColorGx.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorGx.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorGx.Location = new System.Drawing.Point(21, 31);
+            this.LabColorGx.Name = "LabColorGx";
+            this.LabColorGx.Size = new System.Drawing.Size(14, 14);
+            this.LabColorGx.TabIndex = 26;
+            this.LabColorGx.Text = "g";
+            this.LabColorGx.Click += new System.EventHandler(this.LabColorGx_Click);
+            // 
+            // LabColorB
+            // 
+            this.LabColorB.AutoSize = true;
+            this.LabColorB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(167)))), ((int)(((byte)(255)))));
+            this.LabColorB.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorB.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorB.Location = new System.Drawing.Point(38, 14);
+            this.LabColorB.Name = "LabColorB";
+            this.LabColorB.Size = new System.Drawing.Size(14, 14);
+            this.LabColorB.TabIndex = 27;
+            this.LabColorB.Text = "B";
+            this.LabColorB.Click += new System.EventHandler(this.LabColorB_Click);
+            // 
+            // LabColorM
+            // 
+            this.LabColorM.AutoSize = true;
+            this.LabColorM.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(53)))), ((int)(((byte)(238)))));
+            this.LabColorM.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorM.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorM.Location = new System.Drawing.Point(4, 31);
+            this.LabColorM.Name = "LabColorM";
+            this.LabColorM.Size = new System.Drawing.Size(14, 14);
+            this.LabColorM.TabIndex = 28;
+            this.LabColorM.Text = "M";
+            this.LabColorM.Click += new System.EventHandler(this.LabColorM_Click);
+            // 
+            // LabColorY
+            // 
+            this.LabColorY.AutoSize = true;
+            this.LabColorY.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(252)))), ((int)(((byte)(52)))));
+            this.LabColorY.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorY.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorY.Location = new System.Drawing.Point(55, 31);
+            this.LabColorY.Name = "LabColorY";
+            this.LabColorY.Size = new System.Drawing.Size(14, 14);
+            this.LabColorY.TabIndex = 29;
+            this.LabColorY.Text = "Y";
+            this.LabColorY.Click += new System.EventHandler(this.LabColorY_Click);
+            // 
+            // LabColorE
+            // 
+            this.LabColorE.AutoSize = true;
+            this.LabColorE.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(255)))), ((int)(((byte)(207)))));
+            this.LabColorE.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorE.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorE.Location = new System.Drawing.Point(72, 31);
+            this.LabColorE.Name = "LabColorE";
+            this.LabColorE.Size = new System.Drawing.Size(14, 14);
+            this.LabColorE.TabIndex = 30;
+            this.LabColorE.Text = "E";
+            this.LabColorE.Click += new System.EventHandler(this.LabColorE_Click);
+            // 
+            // LabColorS
+            // 
+            this.LabColorS.AutoSize = true;
+            this.LabColorS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(156)))), ((int)(((byte)(42)))));
+            this.LabColorS.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorS.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorS.Location = new System.Drawing.Point(89, 14);
+            this.LabColorS.Name = "LabColorS";
+            this.LabColorS.Size = new System.Drawing.Size(14, 14);
+            this.LabColorS.TabIndex = 31;
+            this.LabColorS.Text = "S";
+            this.LabColorS.Click += new System.EventHandler(this.LabColorS_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.MediumBlue;
+            this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBox1.Controls.Add(this.LabColorEnd);
+            this.groupBox1.Controls.Add(this.LabColorS);
+            this.groupBox1.Controls.Add(this.LabColorE);
+            this.groupBox1.Controls.Add(this.LabColorY);
+            this.groupBox1.Controls.Add(this.LabColorM);
+            this.groupBox1.Controls.Add(this.LabColorB);
+            this.groupBox1.Controls.Add(this.LabColorGx);
+            this.groupBox1.Controls.Add(this.LabColorL);
+            this.groupBox1.Controls.Add(this.LabColorW);
+            this.groupBox1.Controls.Add(this.LabColorH);
+            this.groupBox1.Controls.Add(this.LabColorG);
+            this.groupBox1.Controls.Add(this.LabColorR);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Location = new System.Drawing.Point(951, 634);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(0);
+            this.groupBox1.Size = new System.Drawing.Size(119, 51);
+            this.groupBox1.TabIndex = 32;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Text Color";
+            // 
+            // LabColorEnd
+            // 
+            this.LabColorEnd.AutoSize = true;
+            this.LabColorEnd.BackColor = System.Drawing.Color.White;
+            this.LabColorEnd.Font = new System.Drawing.Font("宋体", 10F);
+            this.LabColorEnd.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.LabColorEnd.Location = new System.Drawing.Point(89, 31);
+            this.LabColorEnd.Name = "LabColorEnd";
+            this.LabColorEnd.Size = new System.Drawing.Size(14, 14);
+            this.LabColorEnd.TabIndex = 32;
+            this.LabColorEnd.Text = "!";
+            this.LabColorEnd.Click += new System.EventHandler(this.LabColorEnd_Click);
+            // 
             // FrmTranslator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1079, 794);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.RadioBaidu);
             this.Controls.Add(this.RadioGoogle);
             this.Controls.Add(this.BtnOpenBrowser);
@@ -291,6 +489,8 @@
             this.Load += new System.EventHandler(this.Mainfrm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Translatorfrm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.DfData)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,6 +513,19 @@
         private System.Windows.Forms.Button BtnOpenBrowser;
         private System.Windows.Forms.RadioButton RadioGoogle;
         private System.Windows.Forms.RadioButton RadioBaidu;
+        private System.Windows.Forms.Label LabColorR;
+        private System.Windows.Forms.Label LabColorG;
+        private System.Windows.Forms.Label LabColorH;
+        private System.Windows.Forms.Label LabColorW;
+        private System.Windows.Forms.Label LabColorL;
+        private System.Windows.Forms.Label LabColorGx;
+        private System.Windows.Forms.Label LabColorB;
+        private System.Windows.Forms.Label LabColorM;
+        private System.Windows.Forms.Label LabColorY;
+        private System.Windows.Forms.Label LabColorE;
+        private System.Windows.Forms.Label LabColorS;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label LabColorEnd;
     }
 }
 
