@@ -4,7 +4,7 @@
   <description asmv2:iconFile="favicon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="pdx-ymltranslator" version="1.1.0.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="pdx-ymltranslator" version="1.2.0.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="pdx-ymltranslator.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="pdx-ymltranslator.exe" size="32704">
-      <assemblyIdentity name="pdx-ymltranslator" version="1.1.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="pdx-ymltranslator.exe" size="34240">
+      <assemblyIdentity name="pdx-ymltranslator" version="1.2.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bKmrruCJPlMaHWCGpjWZI63di3ktpOAVNWTRcSwy6pA=</dsig:DigestValue>
+        <dsig:DigestValue>2RwY+o7P3Dg8wOUczQc9p6JCSae05vjfZa7iHsvoeFs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

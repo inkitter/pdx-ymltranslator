@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,17 +10,11 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Web.Script.Serialization;
-using System.Collections;
 
 namespace pdx_ymltranslator
 {
     public partial class FrmTranslator : Form
     {
-        public FrmTranslator()
-        {
-            InitializeComponent();
-        }
-
         private void Mainfrm_Load(object sender, EventArgs e)
         {
             FunRefresh();
@@ -58,17 +50,16 @@ namespace pdx_ymltranslator
             }
         }
 
-        private void Mainfrm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
         List<string> listEng;
         List<string> listChn;
         List<YML> YMLText;
-        string LoadedFileName = "";
 
         private void BtnSave_Click(object sender, EventArgs e)
+        {
+            FuncSave();
+        }
+
+        private void FuncSave()
         {
             int Maxnum = Math.Min(listEng.Count, listChn.Count) - 1;
             for (int id = 0; id < Maxnum; id++)
@@ -94,36 +85,6 @@ namespace pdx_ymltranslator
                 LoadtoDataGrid();
             }
         }
-
-        private static string RexValName(string RegText)
-        {
-            Regex Reggetname = new Regex("(^.*?):.*?(?=\")", RegexOptions.None);
-            string retext = "";
-            var matches = Reggetname.Matches(RegText);
-
-            foreach (var item in matches)
-            {
-                retext += item.ToString();
-            }
-            return retext;
-        }
-        // 根据正则表达式读取":"前的变量名。
-
-        private static string RexValue(string RegText)
-        {
-            Regex Reggetname = new Regex("(?<=(\\s\")).+(?=\")", RegexOptions.None);
-            //  "\"(.*?)*\"$"
-            string retext = "";
-            var matches = Reggetname.Matches(RegText);
-
-            foreach (var item in matches)
-            {
-                retext += item.ToString();
-            }
-            return retext;
-        }
-
-        // 保存最终文本信息的全局变量，方便传递
 
         private void ReadFile()
         {
@@ -166,7 +127,6 @@ namespace pdx_ymltranslator
                     });
                 }
             }
-            LoadedFileName = EngPath;
         }
 
         private void LoadtoDataGrid()
@@ -195,14 +155,14 @@ namespace pdx_ymltranslator
 
         private void Applybtn_Click(object sender, EventArgs e)
         {
-            int id = DfData.CurrentRow.Index;
-            YMLText.ElementAt(id).VCHN = TxtCHN.Text;
+            YMLText.ElementAt(DfData.CurrentRow.Index).VCHN = TxtCHN.Text;
             DfData.Refresh();
+            //将文本框内容放入对象，并刷新datagrid。
             BtnSave.Enabled = true;
-
+            //做过修改，保存按钮可以使用了。
         }
 
-        private void DataGridALL_SelectionChanged(object sender, EventArgs e)
+        private void DfData_SelectionChanged(object sender, EventArgs e)
         {
             if (DfData.CurrentRow.Selected == true)
             {
@@ -215,15 +175,24 @@ namespace pdx_ymltranslator
             int id = DfData.CurrentRow.Index;
             TxtENG.Text = YMLText.ElementAt(id).VENG;
             TxtCHN.Text = YMLText.ElementAt(id).VCHN;
-            Translatehttp();
+            TranslateAPI();
         }
 
-        private async void Translatehttp()
+        private async void TranslateAPI()
         {
             BtnAPItochnBox.Enabled = false;
             Task<string> RetransText = new Task<string>(RequestText);
-            RetransText.Start();
-            TxtLog.Text = await RetransText;
+            try
+            {
+                RetransText.Start();
+                TxtLog.Text = await RetransText;
+                RetransText.Dispose();
+            }
+            catch
+            {
+                TxtLog.Text = "Baidu Translate API Error";
+                RetransText.Dispose();
+            }
             BtnAPItochnBox.Enabled = true;
         }
 
@@ -242,11 +211,36 @@ namespace pdx_ymltranslator
             return restring;
         }
 
+        private static string RexValName(string RegText)
+        {
+            Regex Reggetname = new Regex("(^.*?):.*?(?=\")", RegexOptions.None);
+            StringBuilder returnString=new StringBuilder();
+            var matches = Reggetname.Matches(RegText);
+
+            foreach (var item in matches)
+            {
+                returnString.Append(item.ToString());
+            }
+            return returnString.ToString();
+        }
+        // 根据正则表达式读取":"前的变量名。
+
+        private static string RexValue(string RegText)
+        {
+            Regex Reggetname = new Regex("(?<=(\\s\")).+(?=\")", RegexOptions.None);
+            //  "\"(.*?)*\"$"
+            StringBuilder returnString = new StringBuilder();
+            var matches = Reggetname.Matches(RegText);
+
+            foreach (var item in matches)
+            {
+                returnString.Append(item.ToString());
+            }
+            return returnString.ToString();
+        }
         private static TranslationResult GetTranslationFromBaiduFanyi(string q)
         {
-            //可以直接到百度翻译API的官网申请
-            //此处的都是子丰随便写的，所以肯定是不能用的
-            //一定要去申请，不然程序的翻译功能不能使用
+            //到百度翻译API的官网申请，不然程序的翻译功能不能使用
             string appID = "20170316000042351";
             string password = "6fiPwb6_lv2tuUS_wmCP";
 
@@ -299,43 +293,14 @@ namespace pdx_ymltranslator
             return sBuilder.ToString();
         }
 
-        private void BtnAPItochnBox_Click(object sender, EventArgs e)
+        public FrmTranslator()
         {
-            TxtCHN.Text = TxtLog.Text;
+            InitializeComponent();
         }
-
-        private void Translatorfrm_KeyDown(object sender, KeyEventArgs e)
+        private void Mainfrm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && e.Modifiers == Keys.Control)
-            {
-                Applybtn_Click(sender, e);
-            }
-            if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
-            {
-                BtnAPItochnBox_Click(sender, e);
-            }
-            if (e.KeyCode == Keys.S && e.Modifiers == Keys.Control)
-            {
-                BtnSave_Click(sender, e);
-            }
+            Environment.Exit(0);
         }
-
-        private void TxtCHN_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if ((Keys)e.KeyChar == Keys.Enter)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void DataGridALL_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
-            {
-                e.Handled = true;
-            }
-        }
-
         private void TxtCHN_Enter(object sender, EventArgs e)
         {
             TxtCHN.SelectAll();
@@ -389,6 +354,57 @@ namespace pdx_ymltranslator
         private void BtnOpenFileOriginal_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("eng\\" + LstFiles.Text);
+        }
+        private void TxtCHN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((Keys)e.KeyChar == Keys.Enter)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void DataGridALL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
+            {
+                e.Handled = true;
+            }
+        }
+        private void BtnAPItochnBox_Click(object sender, EventArgs e)
+        {
+            TxtCHN.Text = TxtLog.Text;
+        }
+
+        private void Translatorfrm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && e.Modifiers == Keys.Control)
+            {
+                Applybtn_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
+            {
+                BtnAPItochnBox_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.S && e.Modifiers == Keys.Control)
+            {
+                BtnSave_Click(sender, e);
+            }
+        }
+
+        private void BtnOpenBrowser_Click(object sender, EventArgs e)
+        {
+            StringBuilder StrOpeninBrowser = new StringBuilder();
+            if (RadioBaidu.Checked)
+            {
+                StrOpeninBrowser.Append("http://fanyi.baidu.com/?#en/zh/");
+                StrOpeninBrowser.Append(TxtENG.Text);
+            }
+            if (RadioGoogle.Checked)
+            {
+                StrOpeninBrowser.Append("http://translate.google.com/?#auto/zh-CN/");
+                StrOpeninBrowser.Append(TxtENG.Text);
+            }
+            System.Diagnostics.Process.Start(StrOpeninBrowser.ToString());
         }
     }
 }
