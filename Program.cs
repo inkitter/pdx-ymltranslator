@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.Web.Script.Serialization;
 
 namespace pdx_ymltranslator
 {
@@ -70,6 +68,60 @@ namespace pdx_ymltranslator
         //public string From { get; set; }
         //public string To { get; set; }
         public Translation[] Data { get; set; }
+    }
+
+    public static class YMLTools
+    {
+        public static TranslationResult GetTranslationFromBaiduFanyi(string q)
+        {
+            WebClient wc = new WebClient();
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            TranslationResult result = jss.Deserialize<TranslationResult>(wc.DownloadString("http://fanyi.baidu.com/transapi?from=en&to=zh&query=" + WebUtility.UrlEncode(q)));
+            return result;
+            //解析json
+        }
+
+        public static string GetTranslatedTextFromAPI(string TexttoTranslate)
+        {
+            if (TexttoTranslate != "")
+            {
+                TranslationResult result = YMLTools.GetTranslationFromBaiduFanyi(TexttoTranslate);
+                return result.Data[0].Dst;
+            }
+            return "Nothing";
+        }
+
+        public static string FuncRegex(string RegText, string RegexRule)
+        {
+            Regex Reggetname = new Regex(RegexRule, RegexOptions.None);
+            StringBuilder returnString = new StringBuilder();
+            var matches = Reggetname.Matches(RegText);
+
+            foreach (var item in matches)
+            {
+                returnString.Append(item.ToString());
+            }
+            return returnString.ToString();
+        }
+
+        public static void TranslationBrowser(string TextToTranslate,string APIEngine)
+        {
+            StringBuilder StrOpeninBrowser = new StringBuilder();
+            switch (APIEngine)
+            {
+                case "Google":
+                    StrOpeninBrowser.Append("http://translate.google.com/?#auto/zh-CN/");
+                    break;
+                case "Baidu":
+                    StrOpeninBrowser.Append("http://fanyi.baidu.com/?#en/zh/");         
+                    break;
+                default:
+                    StrOpeninBrowser.Append("http://fanyi.baidu.com/?#en/zh/");
+                    break;
+            }
+            StrOpeninBrowser.Append(TextToTranslate);
+            System.Diagnostics.Process.Start(StrOpeninBrowser.ToString());
+        }
     }
 
 }

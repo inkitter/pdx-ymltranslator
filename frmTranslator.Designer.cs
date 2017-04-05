@@ -53,7 +53,8 @@
             // TxtLog
             // 
             this.TxtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TxtLog.Location = new System.Drawing.Point(12, 715);
+            this.TxtLog.Font = new System.Drawing.Font("宋体", 10F);
+            this.TxtLog.Location = new System.Drawing.Point(3, 717);
             this.TxtLog.Multiline = true;
             this.TxtLog.Name = "TxtLog";
             this.TxtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -66,7 +67,7 @@
             // BtnSave
             // 
             this.BtnSave.Enabled = false;
-            this.BtnSave.Location = new System.Drawing.Point(989, 757);
+            this.BtnSave.Location = new System.Drawing.Point(980, 751);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(97, 34);
             this.BtnSave.TabIndex = 3;
@@ -77,9 +78,10 @@
             // 
             // LstFiles
             // 
+            this.LstFiles.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LstFiles.FormattingEnabled = true;
             this.LstFiles.ItemHeight = 12;
-            this.LstFiles.Location = new System.Drawing.Point(12, 6);
+            this.LstFiles.Location = new System.Drawing.Point(3, 6);
             this.LstFiles.Name = "LstFiles";
             this.LstFiles.Size = new System.Drawing.Size(184, 532);
             this.LstFiles.TabIndex = 4;
@@ -89,7 +91,7 @@
             // LabFROM
             // 
             this.LabFROM.AutoSize = true;
-            this.LabFROM.Location = new System.Drawing.Point(857, 550);
+            this.LabFROM.Location = new System.Drawing.Point(848, 544);
             this.LabFROM.Name = "LabFROM";
             this.LabFROM.Size = new System.Drawing.Size(29, 12);
             this.LabFROM.TabIndex = 6;
@@ -98,7 +100,7 @@
             // LabTo
             // 
             this.LabTo.AutoSize = true;
-            this.LabTo.Location = new System.Drawing.Point(857, 635);
+            this.LabTo.Location = new System.Drawing.Point(848, 629);
             this.LabTo.Name = "LabTo";
             this.LabTo.Size = new System.Drawing.Size(53, 12);
             this.LabTo.TabIndex = 7;
@@ -119,7 +121,7 @@
             this.DfData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DfData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.DfData.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.DfData.Location = new System.Drawing.Point(202, 6);
+            this.DfData.Location = new System.Drawing.Point(193, 6);
             this.DfData.MultiSelect = false;
             this.DfData.Name = "DfData";
             this.DfData.ReadOnly = true;
@@ -147,22 +149,21 @@
             // TxtENG
             // 
             this.TxtENG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TxtENG.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtENG.Location = new System.Drawing.Point(12, 549);
+            this.TxtENG.Font = new System.Drawing.Font("宋体", 10F);
+            this.TxtENG.Location = new System.Drawing.Point(3, 551);
             this.TxtENG.Multiline = true;
             this.TxtENG.Name = "TxtENG";
             this.TxtENG.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.TxtENG.Size = new System.Drawing.Size(838, 77);
             this.TxtENG.TabIndex = 9;
             this.TxtENG.TabStop = false;
-            this.TxtENG.DoubleClick += new System.EventHandler(this.TxtENG_DoubleClick);
             this.TxtENG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtENG_KeyDown);
             // 
             // TxtCHN
             // 
             this.TxtCHN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TxtCHN.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TxtCHN.Location = new System.Drawing.Point(12, 632);
+            this.TxtCHN.Font = new System.Drawing.Font("宋体", 11F);
+            this.TxtCHN.Location = new System.Drawing.Point(3, 634);
             this.TxtCHN.Multiline = true;
             this.TxtCHN.Name = "TxtCHN";
             this.TxtCHN.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -175,19 +176,19 @@
             // 
             // BtnApply
             // 
-            this.BtnApply.Location = new System.Drawing.Point(857, 657);
+            this.BtnApply.Location = new System.Drawing.Point(848, 651);
             this.BtnApply.Name = "BtnApply";
             this.BtnApply.Size = new System.Drawing.Size(94, 34);
             this.BtnApply.TabIndex = 0;
             this.BtnApply.TabStop = false;
             this.BtnApply.Text = "Apply (Ctrl+Enter)";
             this.BtnApply.UseVisualStyleBackColor = true;
-            this.BtnApply.Click += new System.EventHandler(this.Applybtn_Click);
+            this.BtnApply.Click += new System.EventHandler(this.BtnApply_Click);
             // 
             // LabAPI
             // 
             this.LabAPI.AutoSize = true;
-            this.LabAPI.Location = new System.Drawing.Point(855, 777);
+            this.LabAPI.Location = new System.Drawing.Point(846, 771);
             this.LabAPI.Name = "LabAPI";
             this.LabAPI.Size = new System.Drawing.Size(59, 12);
             this.LabAPI.TabIndex = 12;
@@ -195,7 +196,7 @@
             // 
             // BtnAPItochnBox
             // 
-            this.BtnAPItochnBox.Location = new System.Drawing.Point(856, 715);
+            this.BtnAPItochnBox.Location = new System.Drawing.Point(847, 709);
             this.BtnAPItochnBox.Name = "BtnAPItochnBox";
             this.BtnAPItochnBox.Size = new System.Drawing.Size(122, 34);
             this.BtnAPItochnBox.TabIndex = 13;
@@ -206,7 +207,7 @@
             // 
             // BtnOpenFileTranslated
             // 
-            this.BtnOpenFileTranslated.Location = new System.Drawing.Point(980, 592);
+            this.BtnOpenFileTranslated.Location = new System.Drawing.Point(971, 586);
             this.BtnOpenFileTranslated.Name = "BtnOpenFileTranslated";
             this.BtnOpenFileTranslated.Size = new System.Drawing.Size(103, 34);
             this.BtnOpenFileTranslated.TabIndex = 14;
@@ -217,7 +218,7 @@
             // 
             // BtnOpenFileOriginal
             // 
-            this.BtnOpenFileOriginal.Location = new System.Drawing.Point(980, 552);
+            this.BtnOpenFileOriginal.Location = new System.Drawing.Point(971, 546);
             this.BtnOpenFileOriginal.Name = "BtnOpenFileOriginal";
             this.BtnOpenFileOriginal.Size = new System.Drawing.Size(103, 34);
             this.BtnOpenFileOriginal.TabIndex = 15;
@@ -228,7 +229,7 @@
             // 
             // BtnOpenBrowser
             // 
-            this.BtnOpenBrowser.Location = new System.Drawing.Point(857, 573);
+            this.BtnOpenBrowser.Location = new System.Drawing.Point(848, 567);
             this.BtnOpenBrowser.Name = "BtnOpenBrowser";
             this.BtnOpenBrowser.Size = new System.Drawing.Size(56, 34);
             this.BtnOpenBrowser.TabIndex = 16;
@@ -240,7 +241,7 @@
             // RadioGoogle
             // 
             this.RadioGoogle.AutoSize = true;
-            this.RadioGoogle.Location = new System.Drawing.Point(920, 574);
+            this.RadioGoogle.Location = new System.Drawing.Point(911, 568);
             this.RadioGoogle.Name = "RadioGoogle";
             this.RadioGoogle.Size = new System.Drawing.Size(59, 16);
             this.RadioGoogle.TabIndex = 17;
@@ -251,7 +252,7 @@
             // 
             this.RadioBaidu.AutoSize = true;
             this.RadioBaidu.Checked = true;
-            this.RadioBaidu.Location = new System.Drawing.Point(920, 592);
+            this.RadioBaidu.Location = new System.Drawing.Point(911, 586);
             this.RadioBaidu.Name = "RadioBaidu";
             this.RadioBaidu.Size = new System.Drawing.Size(53, 16);
             this.RadioBaidu.TabIndex = 18;
@@ -263,7 +264,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1089, 794);
+            this.ClientSize = new System.Drawing.Size(1079, 794);
             this.Controls.Add(this.RadioBaidu);
             this.Controls.Add(this.RadioGoogle);
             this.Controls.Add(this.BtnOpenBrowser);

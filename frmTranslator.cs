@@ -5,11 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.IO;
-using System.Net;
-using System.Security.Cryptography;
-using System.Web.Script.Serialization;
 
 namespace pdx_ymltranslator
 {
@@ -53,6 +49,8 @@ namespace pdx_ymltranslator
         List<string> listEng;
         List<string> listChn;
         List<YML> YMLText;
+        string StrRegexVarName = "(^.*?):.*?(?=\")";
+        string StrRegexVarValue = "(?<=(\\s\")).+(?=\")";
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -112,17 +110,17 @@ namespace pdx_ymltranslator
                     YMLText.Add(new YML
                     {
                         AllENG = listEng.ElementAt(i),
-                        VName = RexValName(listEng.ElementAt(i)),
-                        VENG = RexValue(listEng.ElementAt(i)),
-                        VCHN = RexValue(listChn.ElementAt(i))
+                        VName = YMLTools.FuncRegex(listEng.ElementAt(i), StrRegexVarName),
+                        VENG = YMLTools.FuncRegex(listEng.ElementAt(i), StrRegexVarValue),
+                        VCHN = YMLTools.FuncRegex(listChn.ElementAt(i), StrRegexVarValue)
                     });
                 }
                 else
                 {
                     YMLText.Add(new YML
                     {
-                        VName = RexValName(listEng.ElementAt(i)),
-                        VENG = RexValue(listEng.ElementAt(i)),
+                        VName = YMLTools.FuncRegex(listEng.ElementAt(i),StrRegexVarName),
+                        VENG = YMLTools.FuncRegex(listEng.ElementAt(i), StrRegexVarValue),
                         VCHN = "Please use YML merger to merge."
                     });
                 }
@@ -133,7 +131,7 @@ namespace pdx_ymltranslator
         {
             DfData.ClearSelection();
             DfData.DataSource = YMLText;
-            DfData.Columns[0].Width = 200;
+            DfData.Columns[0].Width = 300;
             DfData.Columns[1].Width = 300;
             DfData.Columns[2].Width = 300;
             DfData.Columns[3].Width = 300;
@@ -153,7 +151,7 @@ namespace pdx_ymltranslator
             }
         }
 
-        private void Applybtn_Click(object sender, EventArgs e)
+        private void BtnApply_Click(object sender, EventArgs e)
         {
             TxtCHN.Text = TxtCHN.Text.Replace("\n", "");
             TxtCHN.Text = TxtCHN.Text.Replace("\r", "");
@@ -177,82 +175,45 @@ namespace pdx_ymltranslator
             int id = DfData.CurrentRow.Index;
             TxtENG.Text = YMLText.ElementAt(id).VENG;
             TxtCHN.Text = YMLText.ElementAt(id).VCHN;
-            TranslateAPI();
+            if (YMLText.ElementAt(id).VName=="" || YMLText.ElementAt(id).VName == "l_english:")
+            {
+                BtnApply.Enabled = false;
+            }
+            else
+            {
+                BtnApply.Enabled = true;
+            }
+            GetAPITranslation();
         }
 
-        private async void TranslateAPI()
+        private async void GetAPITranslation()
         {
-            BtnAPItochnBox.Enabled = false;
             TxtLog.Clear();
-            Task<string> RetransText = new Task<string>(RequestText);
+            BtnAPItochnBox.Enabled = false;
+            Task<string> GetTranslationTask = new Task<string>(FuncAsyncGetTranslation);
             try
             {
-                RetransText.Start();
-                TxtLog.AppendText(await RetransText);
-                RetransText.Dispose();
+                GetTranslationTask.Start();
+                TxtLog.Text = await GetTranslationTask;
+                GetTranslationTask.Dispose();
             }
             catch
             {
-                TxtLog.AppendText("Baidu Translate API Error");
-                RetransText.Dispose();
+                TxtLog.Text = "Nothing";
+                GetTranslationTask.Dispose();
             }
             BtnAPItochnBox.Enabled = true;
         }
-
-        private string RequestText()
+        private string FuncAsyncGetTranslation()
         {
-            string restring = "Nothing";
-
-            if (TxtENG.Text != "")
-            {
-                string q = TxtENG.Text;
-
-                TranslationResult result = GetTranslationFromBaiduFanyi(q);
-                restring = result.Data[0].Dst;
-            }
-
-            return restring;
-        }
-
-        private static TranslationResult GetTranslationFromBaiduFanyi(string q)
-        {
-            WebClient wc = new WebClient();
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            TranslationResult result = jss.Deserialize<TranslationResult>(wc.DownloadString("http://fanyi.baidu.com/transapi?from=en&to=zh&query=" + WebUtility.UrlEncode(q)));
-            return result;
-            //解析json
-        }
-
-        private static string RexValName(string RegText)
-        {
-            Regex Reggetname = new Regex("(^.*?):.*?(?=\")", RegexOptions.None);
-            StringBuilder returnString=new StringBuilder();
-            var matches = Reggetname.Matches(RegText);
-
-            foreach (var item in matches)
-            {
-                returnString.Append(item.ToString());
-            }
-            return returnString.ToString();
-        }
-        // 根据正则表达式读取":"前的变量名。
-
-        private static string RexValue(string RegText)
-        {
-            Regex Reggetname = new Regex("(?<=(\\s\")).+(?=\")", RegexOptions.None);
-            //  "\"(.*?)*\"$"
-            StringBuilder returnString = new StringBuilder();
-            var matches = Reggetname.Matches(RegText);
-
-            foreach (var item in matches)
-            {
-                returnString.Append(item.ToString());
-            }
-            return returnString.ToString();
-        }
-        
-
-        
+            StringBuilder AskAPIText = new StringBuilder();
+            AskAPIText.Append(TxtENG.Text);
+            AskAPIText.Replace("\r", "");
+            AskAPIText.Replace("\n", "");
+            AskAPIText.Replace("\\n", "\\n ");
+            
+            return YMLTools.GetTranslatedTextFromAPI(AskAPIText.ToString());
+        }        
 
         public FrmTranslator()
         {
@@ -280,6 +241,10 @@ namespace pdx_ymltranslator
             {
                 TxtENG.SelectAll();
             }
+            if (e.KeyCode == Keys.Right && e.Modifiers == Keys.Control)
+            {
+                GetAPITranslation();
+            }
         }
 
         private void Logtxtbox_KeyDown(object sender, KeyEventArgs e)
@@ -288,11 +253,6 @@ namespace pdx_ymltranslator
             {
                 TxtLog.SelectAll();
             }
-        }
-
-        private void TxtENG_DoubleClick(object sender, EventArgs e)
-        {
-            TxtENG.SelectAll();
         }
 
         private void TxtCHN_DoubleClick(object sender, EventArgs e)
@@ -338,7 +298,7 @@ namespace pdx_ymltranslator
         {
             if (e.KeyCode == Keys.Enter && e.Modifiers == Keys.Control)
             {
-                Applybtn_Click(sender, e);
+                BtnApply_Click(sender, e);
             }
             if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
             {
@@ -352,18 +312,14 @@ namespace pdx_ymltranslator
 
         private void BtnOpenBrowser_Click(object sender, EventArgs e)
         {
-            StringBuilder StrOpeninBrowser = new StringBuilder();
             if (RadioBaidu.Checked)
             {
-                StrOpeninBrowser.Append("http://fanyi.baidu.com/?#en/zh/");
-                StrOpeninBrowser.Append(TxtENG.Text);
+                YMLTools.TranslationBrowser(TxtENG.Text, "Baidu");
             }
             if (RadioGoogle.Checked)
             {
-                StrOpeninBrowser.Append("http://translate.google.com/?#auto/zh-CN/");
-                StrOpeninBrowser.Append(TxtENG.Text);
+                YMLTools.TranslationBrowser(TxtENG.Text, "Google");
             }
-            System.Diagnostics.Process.Start(StrOpeninBrowser.ToString());
         }
     }
 }
