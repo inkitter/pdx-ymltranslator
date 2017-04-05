@@ -2,3 +2,38 @@
 5. 切文件若未保存的提示
 
 6. chn文本溢出部分的处理
+
+            //string url = String.Format("http://api.fanyi.baidu.com/api/trans/vip/translate?q={0}&from={1}&to={2}&appid={3}&salt={4}&sign={5}",
+            //    WebUtility.UrlEncode(q),
+            //    "en",
+            //    "zh",
+            //    appID,
+            //    randomNum,
+            //    md5Sign
+            //    );
+            //随机数
+            string randomNum = DateTime.Now.Millisecond.ToString();
+            //md5加密
+            string md5Sign = GetMD5WithString(appID + q + randomNum + password);
+            //url
+            string appID = "20170316000042351";
+            string password = "6fiPwb6_lv2tuUS_wmCP";
+private static string GetMD5WithString(string input)
+        {
+            if (input == null)
+            {
+                return null;
+            }
+            MD5 md5Hash = MD5.Create();
+            //将输入字符串转换为字节数组并计算哈希数据  
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            //创建一个 Stringbuilder 来收集字节并创建字符串  
+            StringBuilder sBuilder = new StringBuilder();
+            //循环遍历哈希数据的每一个字节并格式化为十六进制字符串  
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            //返回十六进制字符串  
+            return sBuilder.ToString();
+        }

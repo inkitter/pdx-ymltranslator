@@ -155,6 +155,8 @@ namespace pdx_ymltranslator
 
         private void Applybtn_Click(object sender, EventArgs e)
         {
+            TxtCHN.Text = TxtCHN.Text.Replace("\n", "");
+            TxtCHN.Text = TxtCHN.Text.Replace("\r", "");
             YMLText.ElementAt(DfData.CurrentRow.Index).VCHN = TxtCHN.Text;
             DfData.Refresh();
             //将文本框内容放入对象，并刷新datagrid。
@@ -181,16 +183,17 @@ namespace pdx_ymltranslator
         private async void TranslateAPI()
         {
             BtnAPItochnBox.Enabled = false;
+            TxtLog.Clear();
             Task<string> RetransText = new Task<string>(RequestText);
             try
             {
                 RetransText.Start();
-                TxtLog.Text = await RetransText;
+                TxtLog.AppendText(await RetransText);
                 RetransText.Dispose();
             }
             catch
             {
-                TxtLog.Text = "Baidu Translate API Error";
+                TxtLog.AppendText("Baidu Translate API Error");
                 RetransText.Dispose();
             }
             BtnAPItochnBox.Enabled = true;
@@ -205,10 +208,19 @@ namespace pdx_ymltranslator
                 string q = TxtENG.Text;
 
                 TranslationResult result = GetTranslationFromBaiduFanyi(q);
-                restring = result.Trans_result[0].Dst;
+                restring = result.Data[0].Dst;
             }
 
             return restring;
+        }
+
+        private static TranslationResult GetTranslationFromBaiduFanyi(string q)
+        {
+            WebClient wc = new WebClient();
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            TranslationResult result = jss.Deserialize<TranslationResult>(wc.DownloadString("http://fanyi.baidu.com/transapi?from=en&to=zh&query=" + WebUtility.UrlEncode(q)));
+            return result;
+            //解析json
         }
 
         private static string RexValName(string RegText)
@@ -238,60 +250,9 @@ namespace pdx_ymltranslator
             }
             return returnString.ToString();
         }
-        private static TranslationResult GetTranslationFromBaiduFanyi(string q)
-        {
-            //到百度翻译API的官网申请，不然程序的翻译功能不能使用
-            string appID = "20170316000042351";
-            string password = "6fiPwb6_lv2tuUS_wmCP";
+        
 
-            string jsonResult = String.Empty;
-            //随机数
-            string randomNum = DateTime.Now.Millisecond.ToString();
-            //md5加密
-            string md5Sign = GetMD5WithString(appID + q + randomNum + password);
-            //url
-            string url = String.Format("http://api.fanyi.baidu.com/api/trans/vip/translate?q={0}&from={1}&to={2}&appid={3}&salt={4}&sign={5}",
-                WebUtility.UrlEncode(q),
-                "en",
-                "zh",
-                appID,
-                randomNum,
-                md5Sign
-                );
-            WebClient wc = new WebClient();
-            try
-            {
-                jsonResult = wc.DownloadString(url);
-            }
-            catch
-            {
-                jsonResult = string.Empty;
-            }
-            //解析json
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            TranslationResult result = jss.Deserialize<TranslationResult>(jsonResult);
-            return result;
-        }
-
-        private static string GetMD5WithString(string input)
-        {
-            if (input == null)
-            {
-                return null;
-            }
-            MD5 md5Hash = MD5.Create();
-            //将输入字符串转换为字节数组并计算哈希数据  
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-            //创建一个 Stringbuilder 来收集字节并创建字符串  
-            StringBuilder sBuilder = new StringBuilder();
-            //循环遍历哈希数据的每一个字节并格式化为十六进制字符串  
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            //返回十六进制字符串  
-            return sBuilder.ToString();
-        }
+        
 
         public FrmTranslator()
         {
@@ -305,8 +266,6 @@ namespace pdx_ymltranslator
         {
             TxtCHN.SelectAll();
         }
-
-
         private void TxtCHN_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)

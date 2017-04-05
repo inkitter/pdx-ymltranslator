@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="pdx-ymltranslator.exe" size="34240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="pdx-ymltranslator.exe" size="33728">
       <assemblyIdentity name="pdx-ymltranslator" version="1.2.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2RwY+o7P3Dg8wOUczQc9p6JCSae05vjfZa7iHsvoeFs=</dsig:DigestValue>
+        <dsig:DigestValue>mbggVQjRePOGjS8KxPLzCyhP9DFzx333e3rVVY8DyZQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
