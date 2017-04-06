@@ -12,6 +12,7 @@ Github：https://github.com/inkitter/pdx-ymltranslator
 2. 将翻译过的yml文件放入chn文件夹。
 3. 运行 pdx-ymltranslator.exe。
 
+
 ### 使用
 
 1. 窗口上半部分：左侧文件列表选择文件，右侧会显示文件内容。已经截取了变量名与文本内容，选择后会显示在下方文本框。
@@ -21,6 +22,7 @@ Github：https://github.com/inkitter/pdx-ymltranslator
 5. Paste API text to Translate 按钮可以直接把API的参考内容复制到翻译文本框。
 6. 因为文本中使用了§这种奇怪的符号来标记字体颜色，输入符号比较麻烦，在右侧提供了Text Color功能，选择文本后点击相应的颜色会自动在文本上加入该颜色代码，不选择文本则只插入§R这种起始，需要在结束处再点击§! 来插入颜色结束。
 7. Open Original 与 Open Translated 用于使用默认文本编辑器打开YMl文件，方便验证文件。
+8. 支持字典式翻译，使用程序目录下的ymldict.csv文件。release包中的ymldict.csv文件内容是根据 https://github.com/cloudwu/stellaris_cn/blob/master/terms_list.txt 制作的群星词典。
 
 
 ## for HOI4, Stellaris

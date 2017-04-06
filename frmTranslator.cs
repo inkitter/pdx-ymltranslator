@@ -62,7 +62,7 @@ namespace pdx_ymltranslator
                 return;
             }
             var reader = new StreamReader(File.OpenRead(UserDictCSV),Encoding.UTF8, true);
-            //try
+            try
             {
                 while (!reader.EndOfStream)
                 {
@@ -75,7 +75,7 @@ namespace pdx_ymltranslator
                     }
                 }
             }
-            //catch { }
+            catch { }
             reader.Close();
         }
 
@@ -196,14 +196,21 @@ namespace pdx_ymltranslator
         {
             if (DfData.CurrentRow.Selected == true)
             {
-                Showintxt();
+                Showintxt(DfData.CurrentRow.Index);
             }
         }
 
-        private void Showintxt()
+        private void Showintxt(int id)
         {
-            int id = DfData.CurrentRow.Index;
-            TxtENG.Text = YMLTools.ReplaceWithUserDict(YMLText.ElementAt(id).VENG,UserDict);
+            if (UserDict.Count>0)
+            {
+                TxtENG.Text = YMLTools.ReplaceWithUserDict(YMLText.ElementAt(id).VENG, UserDict);
+            }
+            else
+            {
+                TxtENG.Text = YMLText.ElementAt(id).VENG;
+            }
+
             TxtCHN.Text = YMLText.ElementAt(id).VCHN;
 
             if (YMLText.ElementAt(id).VName=="" || YMLText.ElementAt(id).VName == "l_english:")
@@ -234,11 +241,13 @@ namespace pdx_ymltranslator
                 GetTranslationTask.Dispose();
             }
             BtnAPItochnBox.Enabled = true;
+
+            string FuncAsyncGetTranslation()
+            {
+                return YMLTools.GetTranslatedTextFromAPI(YMLTools.RemoveReturnMark(TxtENG.Text));
+            }
         }
-        private string FuncAsyncGetTranslation()
-        {
-            return YMLTools.GetTranslatedTextFromAPI(YMLTools.RemoveReturnMark(TxtENG.Text));
-        }        
+          
 
         public FrmTranslator()
         {

@@ -137,15 +137,14 @@ namespace pdx_ymltranslator
         }
         // 用于移除换行符。
 
-        public static string ReplaceWithUserDict(string input, Dictionary<string, string> UserDict)
+        public static string ReplaceWithUserDict(string input, Dictionary<string, string> dict)
         {
-            StringBuilder ConverText = new StringBuilder();
-            ConverText.Append(input.ToLower());
-            foreach (KeyValuePair<string, string> kvp in UserDict)
+            foreach (KeyValuePair<string, string> kvp in dict)
             {
-                ConverText.Replace(kvp.Key, kvp.Value);
+                Regex rgx = new Regex(@"(\W|^)" + kvp.Key + @"(\W|$)", RegexOptions.IgnoreCase);
+                input = rgx.Replace(input, kvp.Key + "[" + kvp.Value + "]");
             }
-            return ConverText.ToString();
+            return input;
         }
     }
 
