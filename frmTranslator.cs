@@ -62,16 +62,20 @@ namespace pdx_ymltranslator
                 return;
             }
             var reader = new StreamReader(File.OpenRead(UserDictCSV),Encoding.UTF8, true);
-            while (!reader.EndOfStream)
+            //try
             {
-                var line = reader.ReadLine();
-                var values = line.Split(',');
-
-                if (!String.IsNullOrEmpty(values[0]) && !String.IsNullOrEmpty(values[1]))
+                while (!reader.EndOfStream)
                 {
-                    UserDict.Add(values[0].ToLower(), values[1]);
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+
+                    if (!String.IsNullOrEmpty(values[0]) && !String.IsNullOrEmpty(values[1]))
+                    {
+                        UserDict.Add(values[0].ToLower(), values[1]);
+                    }
                 }
             }
+            //catch { }
             reader.Close();
         }
 
