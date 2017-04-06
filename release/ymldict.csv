@@ -1,1 +1,127 @@
-﻿Neutral,鸭鸭
+﻿Trait, 特质
+Ethic, 道德观
+Ethos, 道德准则
+Collectivism, 集体本位论
+Collectivist, 集体本位者
+Individualism, 个体本位论
+Individualist, 个体本位者
+Xenophobia, 排外
+Xenophobe, 排外者
+Xenophobic, 排外的
+Xenophilia, 亲外
+Xenophile, 亲外者
+Militarism, 军国主义
+Militarist, 军国主义者
+Militaristic, 军国主义(的)
+Pacifism, 和平主义
+Pacifist, 和平主义者
+Pacifistic, 和平主义的
+Spiritualism, 精神主义
+Spiritualist, 精神主义者
+Spiritualistic, 精神主义的
+Materialism, 物质主义
+Materialist, 物质主义者
+Materialistic, 物质主义的
+Neutral, 中立
+
+# 事件名词
+Curators, 博物馆署
+Riggan, 瑞玵
+XuraCorp, 旭然集团
+Muutagan, 穆塔钢
+Drake, 龙兽
+Pantagruel, 庞大固埃
+Gargantua, 高康大
+Stellar Devourer, 噬星者
+
+Tiyanki, 天凯
+Cybrex, 赛博霸王
+Void Cloud, 虚空之云
+Space Amoeba, 太空阿米巴
+
+Javorian Pox, 枫痘
+
+#行为
+Survey, 勘察
+Jump, 跃迁
+Uplift, 开化
+Purge, 肃清
+Purging, 肃清中
+Disassemble, 拆解
+
+Click, 点击
+Right Click, 右键点击
+
+# 科技/武器
+Deflector, 偏向器
+X-ray Laser, X射线激光
+Garrison, 驻军
+Drone, 无人机
+Droid, 人型机器人
+Projectile , 投射武器
+Warp, 曲速
+HyperDrive, 超空间驱动
+JumpDrive, 折跃引擎
+Psionic, 灵能
+FTL, 超光速引擎(FTL)
+Hyperlane, 超空间航道
+
+#外交
+League of Non-Aligned Powers, 不结盟力量联合体
+Tributary, 藩属国
+Vassal, 臣属国
+Thrall, 仆从国
+Dominion, 自治领
+Signatory, 协约国
+Satellite, 卫星国
+Lord, 宗主国
+Subject, 附庸
+Embassy, 大使馆
+
+#名词
+modifier, 修正
+Government, 政府
+government form, 政体
+government type, 政体
+Edict, 法令
+committee, 委员会
+council, 议会
+cost, 消耗
+lesser lifeform, 低级生物
+
+Hotkey, 快捷键
+Habitability, 宜居性
+Subspace, 亚空间
+Homeworld, 母星
+Frontier, 边境
+Ship, 舰船
+Species, 种族
+Sector, 星域
+Spaceport, 太空港
+Station, 基地
+Power, 能量
+Energy, 能源
+credits, 点数
+
+Xeno, 异族
+Dimension, 次元
+Dimensional, 次元
+Extradimension, 异次元
+Extradimensional, 异次元
+
+Fallen Empire, 堕落帝国
+
+Molten World, 熔岩世界
+Frozen World, 寒冰世界
+Barren World, 荒芜世界
+Desert World, 沙漠世界
+Arid World, 旱地世界
+Tundra World, 冻原世界
+Continental World, 大陆世界
+Tropical World, 热带世界
+Ocean World, 海洋世界
+Arctic World, 极地世界
+Alpine World, 高寒世界
+Savannah World, 草原世界
+Toxic World, 剧毒世界
+Gaia World, 盖娅世界
