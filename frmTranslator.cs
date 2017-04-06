@@ -14,6 +14,7 @@ namespace pdx_ymltranslator
         private void Mainfrm_Load(object sender, EventArgs e)
         {
             FunRefresh();
+            UserDictInitialize();
         }
 
         private void FunRefresh()
@@ -51,6 +52,28 @@ namespace pdx_ymltranslator
         List<YML> YMLText;
         string StrRegexVarName = "(^.*?):.*?(?=\")";
         string StrRegexVarValue = "(?<=(\\s\")).+(?=\")";
+        Dictionary<string, string> UserDict = new Dictionary<string, string>();
+        const string UserDictCSV = "ymldict.csv";
+
+        private void UserDictInitialize()
+        {
+            if (!File.Exists(UserDictCSV))
+            {
+                return;
+            }
+            var reader = new StreamReader(File.OpenRead(UserDictCSV),Encoding.UTF8, true);
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                var values = line.Split(',');
+
+                if (!String.IsNullOrEmpty(values[0]) && !String.IsNullOrEmpty(values[1]))
+                {
+                    UserDict.Add(values[0].ToLower(), values[1]);
+                }
+            }
+            reader.Close();
+        }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -86,7 +109,6 @@ namespace pdx_ymltranslator
 
         private void ReadFile()
         {
-            TxtLog.Clear();
             string EngPath = "eng\\" + LstFiles.Text;
             string ChnPath = "chn\\" + LstFiles.Text;
 
@@ -131,6 +153,8 @@ namespace pdx_ymltranslator
         {
             DfData.ClearSelection();
             DfData.DataSource = YMLText;
+            // 将对象映射到datagrid里。
+
             DfData.Columns[0].Width = 300;
             DfData.Columns[1].Width = 300;
             DfData.Columns[2].Width = 300;
@@ -141,6 +165,8 @@ namespace pdx_ymltranslator
             DfData.Columns[1].HeaderText = "TransTo";
             DfData.Columns[3].HeaderText = "Save Preview";
             DfData.Columns[4].HeaderText = "Variable Name";
+            // 调整datagrid样式
+
             foreach (DataGridViewRow row in DfData.Rows)
             {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
@@ -149,15 +175,15 @@ namespace pdx_ymltranslator
                     row.Cells[1].Style.BackColor = Color.LightCyan;
                 }
             }
+            // 寻找原文与译文内容一致的，标记颜色，醒目便于确认需要翻译的部分。
         }
 
         private void BtnApply_Click(object sender, EventArgs e)
         {
-            TxtCHN.Text = TxtCHN.Text.Replace("\n", "");
-            TxtCHN.Text = TxtCHN.Text.Replace("\r", "");
+            TxtCHN.Text = YMLTools.RemoveReturnMark(TxtCHN.Text);
             YMLText.ElementAt(DfData.CurrentRow.Index).VCHN = TxtCHN.Text;
             DfData.Refresh();
-            //将文本框内容放入对象，并刷新datagrid。
+            //将文本框内容移除换行符，放回变量，并刷新datagrid。
             BtnSave.Enabled = true;
             //做过修改，保存按钮可以使用了。
         }
@@ -173,8 +199,9 @@ namespace pdx_ymltranslator
         private void Showintxt()
         {
             int id = DfData.CurrentRow.Index;
-            TxtENG.Text = YMLText.ElementAt(id).VENG;
+            TxtENG.Text = YMLTools.ReplaceWithUserDict(YMLText.ElementAt(id).VENG,UserDict);
             TxtCHN.Text = YMLText.ElementAt(id).VCHN;
+
             if (YMLText.ElementAt(id).VName=="" || YMLText.ElementAt(id).VName == "l_english:")
             {
                 BtnApply.Enabled = false;
@@ -206,13 +233,7 @@ namespace pdx_ymltranslator
         }
         private string FuncAsyncGetTranslation()
         {
-            StringBuilder AskAPIText = new StringBuilder();
-            AskAPIText.Append(TxtENG.Text);
-            AskAPIText.Replace("\r", "");
-            AskAPIText.Replace("\n", "");
-            AskAPIText.Replace("\\n", "\\n ");
-            
-            return YMLTools.GetTranslatedTextFromAPI(AskAPIText.ToString());
+            return YMLTools.GetTranslatedTextFromAPI(YMLTools.RemoveReturnMark(TxtENG.Text));
         }        
 
         public FrmTranslator()

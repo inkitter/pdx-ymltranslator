@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Web.Script.Serialization;
+using System.Collections.Generic;
 
 namespace pdx_ymltranslator
 {
@@ -72,7 +73,7 @@ namespace pdx_ymltranslator
 
     public static class YMLTools
     {
-        public static TranslationResult GetTranslationFromBaiduFanyi(string q)
+        private static TranslationResult GetTranslationFromBaiduFanyi(string q)
         {
             WebClient wc = new WebClient();
             JavaScriptSerializer jss = new JavaScriptSerializer();
@@ -85,11 +86,12 @@ namespace pdx_ymltranslator
         {
             if (TexttoTranslate != "")
             {
-                TranslationResult result = YMLTools.GetTranslationFromBaiduFanyi(TexttoTranslate);
+                TranslationResult result = GetTranslationFromBaiduFanyi(TexttoTranslate);
                 return result.Data[0].Dst;
             }
             return "Nothing";
         }
+        // 用于从baidu 翻译API获取翻译。
 
         public static string FuncRegex(string RegText, string RegexRule)
         {
@@ -103,6 +105,7 @@ namespace pdx_ymltranslator
             }
             return returnString.ToString();
         }
+        // 用于截取
 
         public static void TranslationBrowser(string TextToTranslate,string APIEngine)
         {
@@ -121,6 +124,28 @@ namespace pdx_ymltranslator
             }
             StrOpeninBrowser.Append(TextToTranslate);
             System.Diagnostics.Process.Start(StrOpeninBrowser.ToString());
+        }
+        // 用于默认浏览器打开翻译网页
+
+        public static string RemoveReturnMark(string input)
+        {
+            StringBuilder RemoveReturnText = new StringBuilder();
+            RemoveReturnText.Append(input);
+            RemoveReturnText.Replace("\r", "");
+            RemoveReturnText.Replace("\n", "");
+            return RemoveReturnText.ToString();
+        }
+        // 用于移除换行符。
+
+        public static string ReplaceWithUserDict(string input, Dictionary<string, string> UserDict)
+        {
+            StringBuilder ConverText = new StringBuilder();
+            ConverText.Append(input.ToLower());
+            foreach (KeyValuePair<string, string> kvp in UserDict)
+            {
+                ConverText.Replace(kvp.Key, kvp.Value);
+            }
+            return ConverText.ToString();
         }
     }
 
