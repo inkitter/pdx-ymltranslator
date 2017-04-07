@@ -50,8 +50,8 @@ namespace pdx_ymltranslator
         List<string> listEng;
         List<string> listChn;
         List<YML> YMLText;
-        string StrRegexVarName = "(^.*?):.*?(?=\")";
-        string StrRegexVarValue = "(?<=(\\s\")).+(?=\")";
+        const string StrRegexVarName = "(^.*?):.*?(?=\")";
+        const string StrRegexVarValue = "(?<=(\\s\")).+(?=\")";
         Dictionary<string, string> UserDict = new Dictionary<string, string>();
         const string UserDictCSV = "ymldict.csv";
 
