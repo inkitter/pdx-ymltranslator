@@ -146,9 +146,9 @@ namespace pdx_ymltranslator
             foreach (DataGridViewRow row in DfData.Rows)
             {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
-                if (row.Cells[0].Value.ToString()==row.Cells[1].Value.ToString() && row.Cells[1].Value.ToString()!="")
+                if (row.Cells[1].Value.ToString()==row.Cells[2].Value.ToString() && row.Cells[2].Value.ToString()!="")
                 {
-                    row.Cells[1].Style.BackColor = Color.LightCyan;
+                    row.Cells[2].Style.BackColor = Color.LightCyan;
                 }
             }
             // 寻找原文与译文内容一致的，标记颜色，醒目便于确认需要翻译的部分。
