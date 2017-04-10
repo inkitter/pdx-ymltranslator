@@ -22,27 +22,174 @@ namespace pdx_ymltranslator
         }
     }
 
-    class YML
+    public class YML
     {
-        public string VENG { get; set; }
-        public string VCHN { get; set; }
-        public string AllENG { get; set; }
-        public string VTranslated {
+        private string lineeng;
+        private string linechn;
+        private string veng;
+        private string vchn;
+        private string variablename;
+        private string variablenamewithoutnum;
+        public YML()
+        {
+            lineeng = "";
+            linechn = "";
+            veng = "";
+            vchn = "";
+            variablename = "";
+            variablenamewithoutnum = "";
+        }
+        public YML(string LineTo)
+        {
+            LineCHN = LineTo;
+            LineENG = "";
+            variablename = YMLTools.RegexGetName(LineTo);
+            variablenamewithoutnum = YMLTools.RegexGetNameOnly(variablename);
+            vchn = YMLTools.RegexGetValue(LineTo);
+            if (HasError()) { FixError(); }
+        }
+        public YML(string LineFrom, Dictionary<string, string> DictForTo)
+        {
+            LineENG = LineFrom;
+            variablename = YMLTools.RegexGetName(LineFrom);
+            variablenamewithoutnum = YMLTools.RegexGetNameOnly(variablename);
+            veng = YMLTools.RegexGetValue(LineFrom);
+
+            if (VariableNameWithoutNum != "" && DictForTo.TryGetValue(VariableNameWithoutNum, out string outvalue) && outvalue != "")
+            {
+                LineCHN = outvalue;
+                //vchn = YMLTools.RegexGetValue(outvalue);
+            }
+            else
+            {
+                LineCHN = LineFrom;
+                //vchn = YMLTools.RegexGetValue(LineFrom);
+            }
+
+            if (HasError()) { FixError(); }
+        }
+        public string VariableNameWithoutNum
+        {
             get
             {
-                string retext="";
-                if (VName != "")
-                {
-                    retext = VName + "\"" + VCHN + "\"";
-                }
-                else
-                {
-                    retext = AllENG;
-                }
-                return retext;
+                return variablenamewithoutnum;
             }
         }
-        public string VName { get; set; }
+        public string VENG
+        {
+            get
+            {
+                if (IsComment()) { return lineeng; }
+                return veng;
+            }
+        }
+
+        public string VCHN
+        {
+            get
+            {
+                //if (IsComment()) { return linechn; }
+                return vchn;
+            }
+        }
+
+        public string TranslatedLine
+        {
+            get
+            {
+                if (IsLineWithComment()) { return LineCHN.Replace(TestComment(), variablename + "\"" + vchn + "\""); }
+                if (variablename != "") { return variablename + "\"" + vchn + "\""; }
+                else { return linechn; }
+            }
+        }
+
+        public string LineENG
+        {
+            get { return lineeng; }
+            set
+            {
+                veng = YMLTools.RegexGetValue(value);
+                variablename = YMLTools.RegexGetName(value);
+                lineeng = value;
+            }
+        }
+
+        public string LineCHN
+        {
+            get { return linechn; }
+            set
+            {
+                vchn = YMLTools.RegexGetValue(value);
+                variablename = YMLTools.RegexGetName(value);
+                linechn = value;
+            }
+        }
+
+        private string VariableName
+        {
+            get { return variablename; }
+            set
+            {
+                variablenamewithoutnum = YMLTools.RegexGetNameOnly(value);
+                variablename = value;
+            }
+        }
+
+        public void ApplyLine(string ApplyText)
+        {
+            if (IsComment()) { linechn = ApplyText; }
+            else { vchn = ApplyText; }
+            vchn = ApplyText;
+        }
+        
+        public string HasErrorText
+        {
+            get
+            {
+                if (HasError()) { return "Error"; }
+                else { return ""; }
+            }
+        }
+
+        public void FixError()
+        {
+            LineCHN = VariableName + "\"" + LineCHN.Replace(VariableName, "") + "\"";
+        }
+
+        private bool IsComment()
+        {
+            try { if (LineCHN.Replace(" ", "").Substring(0, 1) == "#") { return true; } }
+            catch { }
+            return false;
+        }
+        private bool IsSpaceLine()
+        {
+            if (LineCHN.Replace(" ", "") == "") { return true; }
+            return false;
+        }
+        public bool IsEditable()
+        {
+            if (IsSpaceLine()) { return false; }
+            if (LineCHN.Replace(" ", "") == "l_english:") { return false; }
+            if (IsComment()) { return false; }
+            return true;
+        }
+        private string TestComment()
+        {
+            return YMLTools.RegexGetName(LineCHN) + "\"" + YMLTools.RegexGetValue(LineCHN) + "\"";
+        }
+        private bool IsLineWithComment()
+        {
+            if (LineCHN.Replace(TestComment(),"").Replace(" ","")!="")
+            { return true; }
+            return false;
+        }
+        private bool HasError()
+        {
+            if (variablename != "" && vchn == "" && LineCHN != LineENG)
+            { return true; }
+            return false;
+        }
     }
 
     public class Translation
@@ -93,7 +240,7 @@ namespace pdx_ymltranslator
         }
         // 用于从baidu 翻译API获取翻译。
 
-        public static string FuncRegex(string RegText, string RegexRule)
+        public static string RegexGetWith(string RegText, string RegexRule)
         {
             Regex Reggetname = new Regex(RegexRule, RegexOptions.None);
             StringBuilder returnString = new StringBuilder();
@@ -104,6 +251,19 @@ namespace pdx_ymltranslator
                 returnString.Append(item.ToString());
             }
             return returnString.ToString();
+        }
+        public static string RegexGetName(string RegText)
+        {
+            return RegexGetWith(RegText, "(^.*?):.*?(?=\")");
+        }
+        public static string RegexGetValue(string RegText)
+        {
+            return RegexGetWith(RegText, "(?<=(\\s\")).+(?=\")");
+        }
+        public static string RegexGetNameOnly(string RegText)
+        {
+            RegText = RegText.Replace(" ", "");
+            return RegexGetWith(RegText, "^.*(?=:)");
         }
         // 用于截取
 
@@ -142,9 +302,47 @@ namespace pdx_ymltranslator
             foreach (KeyValuePair<string, string> kvp in dict)
             {
                 Regex rgx = new Regex(@"(\W|^)" + kvp.Key + @"(\W|$)", RegexOptions.IgnoreCase);
-                input = rgx.Replace(input, kvp.Key + "[" + kvp.Value + "]");
+                input = rgx.Replace(input, " "+kvp.Key + "<" + kvp.Value + "> ");
             }
             return input;
+        }
+
+        public static List<YML> BuildYMLList(List<string> listEng,List<string> listChn)
+        {
+            Dictionary<string, string> dictChn = BuildDictionary(listChn);
+
+            List<YML> returnYMLList = new List<YML>();
+            foreach (string lineEng in listEng)
+            {
+                returnYMLList.Add(new YML(lineEng,dictChn));
+            }
+            foreach (YML lineYML in returnYMLList)
+            {
+                if (dictChn.ContainsKey(lineYML.VariableNameWithoutNum))
+                {
+                    dictChn.Remove(lineYML.VariableNameWithoutNum);
+                }
+            }
+            List<string> dictLeft = new List<string>(dictChn.Values);
+            foreach (string lineLeft in dictLeft)
+            {
+                returnYMLList.Add(new YML(lineLeft));
+            }
+            return returnYMLList;
+        }
+
+        private static Dictionary<string, string> BuildDictionary(List<string> list)
+        {
+            Dictionary<string, string> returnDict = new Dictionary<string, string>();
+            foreach (string line in list)
+            {
+                string vn = RegexGetNameOnly(RegexGetName(line));
+                if (!returnDict.ContainsKey(vn))
+                {
+                    returnDict.Add(vn, line);
+                }
+            }
+            return returnDict;
         }
     }
 

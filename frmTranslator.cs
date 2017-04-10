@@ -9,6 +9,7 @@ using System.IO;
 
 namespace pdx_ymltranslator
 {
+    
     public partial class FrmTranslator : Form
     {
         private void Mainfrm_Load(object sender, EventArgs e)
@@ -50,8 +51,6 @@ namespace pdx_ymltranslator
         List<string> listEng;
         List<string> listChn;
         List<YML> YMLText;
-        const string StrRegexVarName = "(^.*?):.*?(?=\")";
-        const string StrRegexVarValue = "(?<=(\\s\")).+(?=\")";
         Dictionary<string, string> UserDict = new Dictionary<string, string>();
         const string UserDictCSV = "ymldict.csv";
 
@@ -86,20 +85,15 @@ namespace pdx_ymltranslator
 
         private void FuncSave()
         {
-            int Maxnum = Math.Min(listEng.Count, listChn.Count) - 1;
-            for (int id = 0; id < Maxnum; id++)
+            List<string> lstWriteback = new List<string>();
+            
+            for (int id = 0; id < YMLText.Count - 1; id++)
             {
-                WriteBack(id);
+                lstWriteback.Add(YMLText.ElementAt(id).TranslatedLine);
             }
-            File.WriteAllLines("chn\\" + LstFiles.Text, listChn.ToArray(), Encoding.UTF8);
+            File.WriteAllLines("chn\\" + LstFiles.Text, lstWriteback.ToArray(), Encoding.UTF8);
             BtnSave.Enabled = false;
             // 保存文件
-        }
-
-        private void WriteBack(int id)
-        {
-            listChn.Insert(id, YMLText.ElementAt(id).VTranslated);
-            listChn.RemoveAt(id + 1);
         }
 
         private void LstFiles_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,30 +121,8 @@ namespace pdx_ymltranslator
 
             listEng = new List<string>(File.ReadAllLines(EngPath));
             listChn = new List<string>(File.ReadAllLines(ChnPath));
-            YMLText = new List<YML>();
 
-            for (int i = 0; i < listEng.Count; i++)
-            {
-                if (i < listChn.Count)
-                {
-                    YMLText.Add(new YML
-                    {
-                        AllENG = listEng.ElementAt(i),
-                        VName = YMLTools.FuncRegex(listEng.ElementAt(i), StrRegexVarName),
-                        VENG = YMLTools.FuncRegex(listEng.ElementAt(i), StrRegexVarValue),
-                        VCHN = YMLTools.FuncRegex(listChn.ElementAt(i), StrRegexVarValue)
-                    });
-                }
-                else
-                {
-                    YMLText.Add(new YML
-                    {
-                        VName = YMLTools.FuncRegex(listEng.ElementAt(i),StrRegexVarName),
-                        VENG = YMLTools.FuncRegex(listEng.ElementAt(i), StrRegexVarValue),
-                        VCHN = "Please use YML merger to merge."
-                    });
-                }
-            }
+            YMLText=YMLTools.BuildYMLList(listEng, listChn);
         }
 
         private void LoadtoDataGrid()
@@ -159,16 +131,16 @@ namespace pdx_ymltranslator
             DfData.DataSource = YMLText;
             // 将对象映射到datagrid里。
 
-            DfData.Columns[0].Width = 300;
+            DfData.Columns[0].Width = 200;
             DfData.Columns[1].Width = 300;
             DfData.Columns[2].Width = 300;
             DfData.Columns[3].Width = 300;
             DfData.Columns[4].Width = 300;
-            DfData.Columns[2].HeaderText = "Original Line";
-            DfData.Columns[0].HeaderText = "FROM";
-            DfData.Columns[1].HeaderText = "TransTo";
-            DfData.Columns[3].HeaderText = "Save Preview";
-            DfData.Columns[4].HeaderText = "Variable Name";
+            //DfData.Columns[2].HeaderText = "Original Line";
+            //DfData.Columns[0].HeaderText = "FROM";
+            //DfData.Columns[1].HeaderText = "TransTo";
+            //DfData.Columns[3].HeaderText = "Save Preview";
+            //DfData.Columns[4].HeaderText = "Variable Name";
             // 调整datagrid样式
 
             foreach (DataGridViewRow row in DfData.Rows)
@@ -185,7 +157,7 @@ namespace pdx_ymltranslator
         private void BtnApply_Click(object sender, EventArgs e)
         {
             TxtCHN.Text = YMLTools.RemoveReturnMark(TxtCHN.Text);
-            YMLText.ElementAt(DfData.CurrentRow.Index).VCHN = TxtCHN.Text;
+            YMLText.ElementAt(DfData.CurrentRow.Index).ApplyLine( TxtCHN.Text);
             DfData.Refresh();
             //将文本框内容移除换行符，放回变量，并刷新datagrid。
             BtnSave.Enabled = true;
@@ -213,7 +185,7 @@ namespace pdx_ymltranslator
 
             TxtCHN.Text = YMLText.ElementAt(id).VCHN;
 
-            if (YMLText.ElementAt(id).VName=="" || YMLText.ElementAt(id).VName == "l_english:")
+            if (!YMLText.ElementAt(id).IsEditable())
             {
                 BtnApply.Enabled = false;
             }
