@@ -16,8 +16,64 @@ namespace pdx_ymltranslator
         {
             FunRefresh();
             UserDictInitialize();
+            SetToolTip();
+            ComBOldVersionInitialize();
         }
 
+        private void SetToolTip()
+        {
+            ToolTiptt.AutomaticDelay = 100;
+            ToolTiptt.AutoPopDelay = 10000;
+            ToolTiptt.InitialDelay = 200;
+            ToolTiptt.ReshowDelay = 200;
+            ToolTiptt.SetToolTip(LabHelp, "Double Click: Open Github Web \n https://github.com/inkitter/pdx-ymltranslator \n Ctrl + ↓: Find Line to Translate \n Ctrl + ←: Refresh API Textbox");
+        }
+        private void ComBOldVersionInitialize()
+        {
+            CombOldVersion.Enabled = false;
+            if (!Directory.Exists(DirOldBase)) { return; }
+
+            string[] DirinOldlist = Directory.GetDirectories(DirOldBase);
+            if (DirinOldlist.Length>0)
+            {
+                CombOldVersion.Items.Clear();
+                foreach(string str in DirinOldlist)
+                {
+                    CombOldVersion.Items.Add(Path.GetFileName(str).ToString());
+                }
+            }
+            else { return; }
+            CombOldVersion.SelectedIndex = 0;
+        }
+        private void ComBLoad()
+        {
+            BuildOldVersionDict();
+            if (OldVersionDict.Count > 0)
+            {
+                foreach (YML y in YMLText)
+                {
+                    y.LoadWithOldDict(OldVersionDict);
+                }
+            }
+            DfRefresh();
+            CombOldVersion.Enabled = true;
+        }
+
+        private void BuildOldVersionDict()
+        {
+            string LoadinDir =DirOldBase+ CombOldVersion.SelectedItem.ToString()+"\\";
+            string[] FileYMLList = Directory.GetFiles(LoadinDir, "*.yml");
+            if (FileYMLList.Length>0)
+            {
+                List<string> ListForDict = new List<string>();
+                foreach(string str in FileYMLList)
+                {
+                    string Filepath = LoadinDir + Path.GetFileName(str);
+                    ListForDict.AddRange(File.ReadAllLines(Filepath));
+                }
+                OldVersionDict=YMLTools.BuildDictionary(ListForDict);
+            }
+        }
         private void FunRefresh()
         {
             if (!Directory.Exists("eng\\"))
@@ -52,7 +108,10 @@ namespace pdx_ymltranslator
         List<string> listChn;
         List<YML> YMLText;
         Dictionary<string, string> UserDict = new Dictionary<string, string>();
+        Dictionary<string,string> OldVersionDict=new Dictionary<string, string>();
+        ToolTip ToolTiptt = new ToolTip();
         const string UserDictCSV = "ymldict.csv";
+        const string DirOldBase = "old\\";
 
         private void UserDictInitialize()
         {
@@ -89,6 +148,7 @@ namespace pdx_ymltranslator
             
             for (int id = 0; id < YMLText.Count - 1; id++)
             {
+                if (ChkSaveOnlyTranslated.Enabled==true&& YMLText.ElementAt(id).SameInToAndFrom()) { continue; }
                 lstWriteback.Add(YMLText.ElementAt(id).TranslatedLine);
             }
             File.WriteAllLines("chn\\" + LstFiles.Text, lstWriteback.ToArray(), Encoding.UTF8);
@@ -131,27 +191,42 @@ namespace pdx_ymltranslator
             DfData.DataSource = YMLText;
             // 将对象映射到datagrid里。
 
-            DfData.Columns[0].Width = 200;
+            DfData.Columns[0].Width = 150;
+            DfData.Columns[0].DefaultCellStyle.BackColor = Color.WhiteSmoke;
             DfData.Columns[1].Width = 300;
             DfData.Columns[2].Width = 300;
-            DfData.Columns[3].Width = 300;
-            DfData.Columns[4].Width = 300;
-            //DfData.Columns[2].HeaderText = "Original Line";
-            //DfData.Columns[0].HeaderText = "FROM";
-            //DfData.Columns[1].HeaderText = "TransTo";
-            //DfData.Columns[3].HeaderText = "Save Preview";
-            //DfData.Columns[4].HeaderText = "Variable Name";
-            // 调整datagrid样式
+            DfData.Columns[3].Width = 500;
+            DfData.Columns[4].Width = 700;
+
+            DfData.Columns[0].HeaderText = "Variable Name";
+            DfData.Columns[1].HeaderText = "FROM";
+            DfData.Columns[2].HeaderText = "To";
+            DfData.Columns[3].HeaderText = "Save Line Preview";
+            DfData.Columns[4].HeaderText = "Line in Old Version";
+
+            // 寻找原文与译文内容一致的，标记颜色，醒目便于确认需要翻译的部分。
+            DfRefresh();
+        }
+
+        private void DfRefresh()
+        {
 
             foreach (DataGridViewRow row in DfData.Rows)
             {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
-                if (row.Cells[1].Value.ToString()==row.Cells[2].Value.ToString() && row.Cells[2].Value.ToString()!="")
+                if (YMLText.ElementAt(row.Index).OldNewisDifferent())
+                {
+                    row.Cells[1].Style.BackColor = Color.LightSalmon;
+                }
+                else
+                {
+                    row.Cells[1].Style.BackColor = Color.White;
+                }
+                if (YMLText.ElementAt(row.Index).SameInToAndFrom())
                 {
                     row.Cells[2].Style.BackColor = Color.LightCyan;
                 }
             }
-            // 寻找原文与译文内容一致的，标记颜色，醒目便于确认需要翻译的部分。
         }
 
         private void BtnApply_Click(object sender, EventArgs e)
@@ -247,7 +322,7 @@ namespace pdx_ymltranslator
             {
                 TxtENG.SelectAll();
             }
-            if (e.KeyCode == Keys.Right && e.Modifiers == Keys.Control)
+            if (e.KeyCode == Keys.Left && e.Modifiers == Keys.Control)
             {
                 GetAPITranslation();
             }
@@ -288,9 +363,13 @@ namespace pdx_ymltranslator
             }
         }
 
-        private void DataGridALL_KeyDown(object sender, KeyEventArgs e)
+        private void Dfdata_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
+            {
+                e.Handled = true;
+            }
+            if (e.KeyCode == Keys.Down && e.Modifiers == Keys.Control)
             {
                 e.Handled = true;
             }
@@ -305,14 +384,32 @@ namespace pdx_ymltranslator
             if (e.KeyCode == Keys.Enter && e.Modifiers == Keys.Control)
             {
                 BtnApply_Click(sender, e);
+                return;
             }
             if (e.KeyCode == Keys.Up && e.Modifiers == Keys.Control)
             {
                 BtnAPItochnBox_Click(sender, e);
+                return;
             }
             if (e.KeyCode == Keys.S && e.Modifiers == Keys.Control)
             {
                 BtnSave_Click(sender, e);
+                return;
+            }
+            if (e.KeyCode == Keys.Down && e.Modifiers == Keys.Control)
+            {
+                for (int i = DfData.CurrentRow.Index; i < DfData.RowCount; i++)
+                {
+                    if (i + 1 <= DfData.RowCount - 1)
+                    {
+                        DfData.CurrentCell = DfData[DfData.CurrentCell.ColumnIndex, i + 1];
+                    }
+                    else
+                    {
+                        DfData.CurrentCell = DfData[DfData.CurrentCell.ColumnIndex, 0];
+                    }
+                    if (YMLText.ElementAt(DfData.CurrentRow.Index).SameInToAndFrom()) { Showintxt(DfData.CurrentRow.Index); break; }
+                }
             }
         }
 
@@ -320,11 +417,11 @@ namespace pdx_ymltranslator
         {
             if (RadioBaidu.Checked)
             {
-                YMLTools.TranslationBrowser(TxtENG.Text, "Baidu");
+                YMLTools.OpenWithBrowser(TxtENG.Text, "Baidu");
             }
             if (RadioGoogle.Checked)
             {
-                YMLTools.TranslationBrowser(TxtENG.Text, "Google");
+                YMLTools.OpenWithBrowser(TxtENG.Text, "Google");
             }
         }
         private void FuncInsertSign(string SignToInsert)
@@ -397,6 +494,16 @@ namespace pdx_ymltranslator
         private void LabColorEnd_Click(object sender, EventArgs e)
         {
             TxtCHN.SelectedText = "§!";
+        }
+
+        private void LabHelp_DoubleClick(object sender, EventArgs e)
+        {
+            YMLTools.OpenWithBrowser("", "Help");
+        }
+
+        private void CombOldVersion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComBLoad();
         }
     }
 }

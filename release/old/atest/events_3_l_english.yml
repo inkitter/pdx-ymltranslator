@@ -1,0 +1,25 @@
+﻿l_english:
+ 
+ ####################################
+ # Anomaly Categories
+ ####################################
+ TUTORIAL_CAT:0 "Leaving Home"
+ TUTORIAL_DESC:1 "During the survey of our home system we found something on [From.GetName] that did not match earlier observations made from our homeworld."
+ TROP_BIOLOGY_CAT:0 "Tropical Oddities"
+ 
+
+
+
+ anomaly.4110.success.desc:0 "The sand dunes of [From.GetName] are treacherous indeed. The fine grained sand runs almost like a liquid, making most landings an ordeal beyond measure.\n\nHowever, our brilliant science team has found a solution thanks to some innovative thinking. A chemical solution, fabricated by Science Officer [Root.GetLeaderName], can be used to bind the sand in key locations, making the [From.GetPlanetMoon] easier to traverse."
+ anomaly.4110.fail.desc:0 "The sand dunes of [From.GetName] are treachearous indeed. The sand is so finely grained that it almost could be called a liquid, and it swallows anything that sets down upon it. Settling here would take a heavy toll on personnel as well as structures.\n\nWith time we could probably learn how to work around these conditions. As the saying went: "Eventually our castle would stand upon the old one.""
+ anomaly.4110.a.tooltip:1 "Adds the §YLiquid Sands§! modifier to [From.GetName]:\nPhysics Research §G+6§!\n£blocker  Quicksand Basin §R+5§!"
+ colony.2043.desc:0 "The last of the infected on [Root.GetName] is no more. It appears that the disease cannot spread to any new hosts at this point."
+ colony.2044.desc:0 "[Root.GetName] stands empty. The [Root.GetPlanetMoon]'s population has been totally wiped out. The good news is that this must have eradicated even the disease and we should be able to repopulate."
+ colony.2043.a:0 "The scourge is over."
+ colony.2050.name:0 "Lost to Bureaucracy"
+ colony.2050.desc:0 "Due to a major clerical error parts of [Root.GetName] has fallen behind in infrastructure maintenance and accommodation services. The people live in rather bleak conditions and will not tolerate it for long. Remedying these problems will cost us time and effort."
+ colony.2050.a.tooltip:1 "[Root.GetName] gains the following:\n$tb_decrepit_dwellings$ §R+1§!\n$tb_failing_infrastructure$ §R+1§!"
+ colony.2050.b:0 "We must invest in this area."
+ colony.2050.c:0 "We have a strong community, help them recover."
+ colony.2050.d:0 "Throw out the inhabitants and raze the area."
+ colony.2050.d.tooltip:0 "§S2 £building  Buildings§! on §Y[Root.GetName]§! are §Rruined§!.\n\n§B2 £pops  Pops§! on §Y[Root.GetName]§! gain the §R$pop_angered$§! modifier for §Y24§! months, with the following effects:\nResource Output §R-25%§!\n£happiness  Happiness §R-25%§!\n\n"

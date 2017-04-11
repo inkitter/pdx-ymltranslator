@@ -60,6 +60,9 @@
             this.LabColorS = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.LabColorEnd = new System.Windows.Forms.Label();
+            this.LabHelp = new System.Windows.Forms.Label();
+            this.CombOldVersion = new System.Windows.Forms.ComboBox();
+            this.ChkSaveOnlyTranslated = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DfData)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +71,7 @@
             // 
             this.TxtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.TxtLog.Font = new System.Drawing.Font("宋体", 10F);
-            this.TxtLog.Location = new System.Drawing.Point(3, 717);
+            this.TxtLog.Location = new System.Drawing.Point(3, 714);
             this.TxtLog.Multiline = true;
             this.TxtLog.Name = "TxtLog";
             this.TxtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -81,7 +84,7 @@
             // BtnSave
             // 
             this.BtnSave.Enabled = false;
-            this.BtnSave.Location = new System.Drawing.Point(980, 751);
+            this.BtnSave.Location = new System.Drawing.Point(980, 758);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(97, 34);
             this.BtnSave.TabIndex = 3;
@@ -158,13 +161,13 @@
             this.DfData.Size = new System.Drawing.Size(880, 532);
             this.DfData.TabIndex = 1;
             this.DfData.SelectionChanged += new System.EventHandler(this.DfData_SelectionChanged);
-            this.DfData.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridALL_KeyDown);
+            this.DfData.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dfdata_KeyDown);
             // 
             // TxtENG
             // 
             this.TxtENG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.TxtENG.Font = new System.Drawing.Font("宋体", 10F);
-            this.TxtENG.Location = new System.Drawing.Point(3, 551);
+            this.TxtENG.Location = new System.Drawing.Point(3, 548);
             this.TxtENG.Multiline = true;
             this.TxtENG.Name = "TxtENG";
             this.TxtENG.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -177,7 +180,7 @@
             // 
             this.TxtCHN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.TxtCHN.Font = new System.Drawing.Font("宋体", 11F);
-            this.TxtCHN.Location = new System.Drawing.Point(3, 634);
+            this.TxtCHN.Location = new System.Drawing.Point(3, 631);
             this.TxtCHN.Multiline = true;
             this.TxtCHN.Name = "TxtCHN";
             this.TxtCHN.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -202,7 +205,7 @@
             // LabAPI
             // 
             this.LabAPI.AutoSize = true;
-            this.LabAPI.Location = new System.Drawing.Point(846, 771);
+            this.LabAPI.Location = new System.Drawing.Point(846, 753);
             this.LabAPI.Name = "LabAPI";
             this.LabAPI.Size = new System.Drawing.Size(59, 12);
             this.LabAPI.TabIndex = 12;
@@ -210,7 +213,7 @@
             // 
             // BtnAPItochnBox
             // 
-            this.BtnAPItochnBox.Location = new System.Drawing.Point(847, 709);
+            this.BtnAPItochnBox.Location = new System.Drawing.Point(847, 707);
             this.BtnAPItochnBox.Name = "BtnAPItochnBox";
             this.BtnAPItochnBox.Size = new System.Drawing.Size(122, 34);
             this.BtnAPItochnBox.TabIndex = 13;
@@ -435,11 +438,11 @@
             this.groupBox1.Controls.Add(this.LabColorR);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox1.Location = new System.Drawing.Point(951, 634);
+            this.groupBox1.Location = new System.Drawing.Point(953, 638);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox1.Size = new System.Drawing.Size(119, 51);
+            this.groupBox1.Size = new System.Drawing.Size(108, 51);
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Text Color";
@@ -457,11 +460,48 @@
             this.LabColorEnd.Text = "!";
             this.LabColorEnd.Click += new System.EventHandler(this.LabColorEnd_Click);
             // 
+            // LabHelp
+            // 
+            this.LabHelp.AutoSize = true;
+            this.LabHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.LabHelp.Location = new System.Drawing.Point(1032, 696);
+            this.LabHelp.Name = "LabHelp";
+            this.LabHelp.Size = new System.Drawing.Size(29, 12);
+            this.LabHelp.TabIndex = 33;
+            this.LabHelp.Text = "Help";
+            this.LabHelp.DoubleClick += new System.EventHandler(this.LabHelp_DoubleClick);
+            // 
+            // CombOldVersion
+            // 
+            this.CombOldVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CombOldVersion.Enabled = false;
+            this.CombOldVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CombOldVersion.FormattingEnabled = true;
+            this.CombOldVersion.Location = new System.Drawing.Point(983, 715);
+            this.CombOldVersion.Name = "CombOldVersion";
+            this.CombOldVersion.Size = new System.Drawing.Size(94, 20);
+            this.CombOldVersion.TabIndex = 34;
+            this.CombOldVersion.TabStop = false;
+            this.CombOldVersion.SelectedIndexChanged += new System.EventHandler(this.CombOldVersion_SelectedIndexChanged);
+            // 
+            // ChkSaveOnlyTranslated
+            // 
+            this.ChkSaveOnlyTranslated.AutoSize = true;
+            this.ChkSaveOnlyTranslated.Location = new System.Drawing.Point(964, 741);
+            this.ChkSaveOnlyTranslated.Name = "ChkSaveOnlyTranslated";
+            this.ChkSaveOnlyTranslated.Size = new System.Drawing.Size(114, 16);
+            this.ChkSaveOnlyTranslated.TabIndex = 35;
+            this.ChkSaveOnlyTranslated.Text = "Only Translated";
+            this.ChkSaveOnlyTranslated.UseVisualStyleBackColor = true;
+            // 
             // FrmTranslator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1079, 794);
+            this.Controls.Add(this.ChkSaveOnlyTranslated);
+            this.Controls.Add(this.CombOldVersion);
+            this.Controls.Add(this.LabHelp);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.RadioBaidu);
             this.Controls.Add(this.RadioGoogle);
@@ -479,12 +519,14 @@
             this.Controls.Add(this.LstFiles);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.TxtLog);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmTranslator";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PDX Game YML Merger";
+            this.Text = "YML Translator";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Mainfrm_FormClosed);
             this.Load += new System.EventHandler(this.Mainfrm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Translatorfrm_KeyDown);
@@ -526,6 +568,9 @@
         private System.Windows.Forms.Label LabColorS;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label LabColorEnd;
+        private System.Windows.Forms.Label LabHelp;
+        private System.Windows.Forms.ComboBox CombOldVersion;
+        private System.Windows.Forms.CheckBox ChkSaveOnlyTranslated;
     }
 }
 

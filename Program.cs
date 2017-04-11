@@ -30,6 +30,8 @@ namespace pdx_ymltranslator
         private string vchn;
         private string variablename;
         private string variablenamewithoutnum;
+        private string oldeng;
+        private int lineindex = 0;
         public YML()
         {
             lineeng = "";
@@ -38,6 +40,7 @@ namespace pdx_ymltranslator
             vchn = "";
             variablename = "";
             variablenamewithoutnum = "";
+            oldeng = "";
         }
         public YML(string LineTo)
         {
@@ -47,6 +50,7 @@ namespace pdx_ymltranslator
             variablenamewithoutnum = YMLTools.RegexGetNameOnly(variablename);
             vchn = YMLTools.RegexGetValue(LineTo);
             if (HasError()) { FixError(); }
+            oldeng = "";
         }
         public YML(string LineFrom, Dictionary<string, string> DictForTo)
         {
@@ -67,7 +71,23 @@ namespace pdx_ymltranslator
             }
 
             if (HasError()) { FixError(); }
+            oldeng = "";
         }
+
+
+        public void LoadWithOldDict(Dictionary<string, string> OldDict)
+        {
+            if (VariableNameWithoutNum != "" && OldDict.TryGetValue(VariableNameWithoutNum, out string outvalue) && outvalue != "")
+            {
+                oldeng = YMLTools.RegexGetValue(outvalue);
+            }
+            else { oldeng = ""; }
+        }
+        public void LineIndexInitialize(int inputLineIndex)
+        {
+            lineindex = inputLineIndex;
+        }
+
         public string VariableNameWithoutNum
         {
             get
@@ -88,11 +108,10 @@ namespace pdx_ymltranslator
         {
             get
             {
-                //if (IsComment()) { return linechn; }
                 return vchn;
             }
         }
-
+        
         public string TranslatedLine
         {
             get
@@ -102,8 +121,11 @@ namespace pdx_ymltranslator
                 else { return linechn; }
             }
         }
-
-        public string LineENG
+        public string OldENG
+        {
+            get { return oldeng; }
+        }
+        private string LineENG
         {
             get { return lineeng; }
             set
@@ -114,7 +136,7 @@ namespace pdx_ymltranslator
             }
         }
 
-        public string LineCHN
+        private string LineCHN
         {
             get { return linechn; }
             set
@@ -124,6 +146,8 @@ namespace pdx_ymltranslator
                 linechn = value;
             }
         }
+
+       
 
         private string VariableName
         {
@@ -142,7 +166,7 @@ namespace pdx_ymltranslator
             vchn = ApplyText;
         }
         
-        public string HasErrorText
+        private string HasErrorText
         {
             get
             {
@@ -189,6 +213,16 @@ namespace pdx_ymltranslator
             if (variablename != "" && vchn == "" && LineCHN != LineENG)
             { return true; }
             return false;
+        }
+        public bool SameInToAndFrom()
+        {
+            if (IsEditable()&&veng == vchn) { return true; }
+            return false;
+        }
+        public bool OldNewisDifferent()
+        {
+            if (YMLTools.RemoveSpace(oldeng) == YMLTools.RemoveSpace(veng)) { return false;  }
+            return true;
         }
     }
 
@@ -267,7 +301,7 @@ namespace pdx_ymltranslator
         }
         // 用于截取
 
-        public static void TranslationBrowser(string TextToTranslate,string APIEngine)
+        public static void OpenWithBrowser(string TextToTranslate,string APIEngine)
         {
             StringBuilder StrOpeninBrowser = new StringBuilder();
             switch (APIEngine)
@@ -277,6 +311,9 @@ namespace pdx_ymltranslator
                     break;
                 case "Baidu":
                     StrOpeninBrowser.Append("http://fanyi.baidu.com/?#en/zh/");         
+                    break;
+                case "Help":
+                    StrOpeninBrowser.Append("https://github.com/inkitter/pdx-ymltranslator");
                     break;
                 default:
                     StrOpeninBrowser.Append("http://fanyi.baidu.com/?#en/zh/");
@@ -296,6 +333,11 @@ namespace pdx_ymltranslator
             return RemoveReturnText.ToString();
         }
         // 用于移除换行符。
+
+        public static string RemoveSpace(string input)
+        {
+            return input.Replace(" ", "");
+        }
 
         public static string ReplaceWithUserDict(string input, Dictionary<string, string> dict)
         {
@@ -331,7 +373,7 @@ namespace pdx_ymltranslator
             return returnYMLList;
         }
 
-        private static Dictionary<string, string> BuildDictionary(List<string> list)
+        public static Dictionary<string, string> BuildDictionary(List<string> list)
         {
             Dictionary<string, string> returnDict = new Dictionary<string, string>();
             foreach (string line in list)
@@ -344,6 +386,8 @@ namespace pdx_ymltranslator
             }
             return returnDict;
         }
+
+        
     }
 
 }
