@@ -146,9 +146,9 @@ namespace pdx_ymltranslator
         {
             List<string> lstWriteback = new List<string>();
             
-            for (int id = 0; id < YMLText.Count - 1; id++)
+            for (int id = 0; id < YMLText.Count ; id++)
             {
-                if (ChkSaveOnlyTranslated.Enabled==true&& YMLText.ElementAt(id).SameInToAndFrom()) { continue; }
+                if ( ChkSaveOnlyTranslated.Checked==true && YMLText.ElementAt(id).SameInToAndFrom()) { continue; }
                 lstWriteback.Add(YMLText.ElementAt(id).TranslatedLine);
             }
             File.WriteAllLines("chn\\" + LstFiles.Text, lstWriteback.ToArray(), Encoding.UTF8);
@@ -216,9 +216,10 @@ namespace pdx_ymltranslator
             foreach (DataGridViewRow row in DfData.Rows)
             {
                 row.HeaderCell.Value = (row.Index + 1).ToString();
-                if (YMLText.ElementAt(row.Index).OldNewisDifferent())
+                if (YMLText.ElementAt(row.Index).OldNewisDifferent() )
                 {
-                    row.Cells[1].Style.BackColor = Color.LightSalmon;
+                    if (YMLText.ElementAt(row.Index).OldENG != "") { row.Cells[1].Style.BackColor = Color.LightSalmon; }
+                    if (YMLText.ElementAt(row.Index).OldENG == "") { row.Cells[1].Style.BackColor = Color.LightSkyBlue; }
                 }
                 else
                 {
