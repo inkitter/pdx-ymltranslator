@@ -162,6 +162,7 @@ namespace pdx_ymltranslator
             {
                 ReadFile();
                 LoadtoDataGrid();
+                if (OldVersionDict.Count > 0) { ComBLoad(); }
             }
         }
 
@@ -187,6 +188,7 @@ namespace pdx_ymltranslator
 
         private void LoadtoDataGrid()
         {
+            
             DfData.ClearSelection();
             DfData.DataSource = YMLText;
             // 将对象映射到datagrid里。
