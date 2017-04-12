@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Web.Script.Serialization;
 using System.Collections.Generic;
+using Microsoft.VisualBasic;
 
 namespace pdx_ymltranslator
 {
@@ -387,7 +388,14 @@ namespace pdx_ymltranslator
             return returnDict;
         }
 
-        
+        public static string ToSimplifiedChinese(string s)
+        {
+            return Strings.StrConv(s, VbStrConv.SimplifiedChinese, 0);
+        }
+        public static string ToTraditionalChinese(string s)
+        {
+            return Strings.StrConv(s, VbStrConv.TraditionalChinese, 0);
+        }
     }
 
 }

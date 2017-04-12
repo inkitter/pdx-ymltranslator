@@ -148,7 +148,9 @@ namespace pdx_ymltranslator
             
             for (int id = 0; id < YMLText.Count ; id++)
             {
-                if ( ChkSaveOnlyTranslated.Checked==true && YMLText.ElementAt(id).SameInToAndFrom()) { continue; }
+                if (ChkSaveOnlyTranslated.Checked == true && YMLText.ElementAt(id).SameInToAndFrom()) { continue; }
+                if (ChkSimplifiedChinese.Checked == true) { lstWriteback.Add(YMLTools.ToSimplifiedChinese(YMLText.ElementAt(id).TranslatedLine)); continue; }
+                if (ChkTraditionalChinese.Checked == true) { lstWriteback.Add(YMLTools.ToTraditionalChinese(YMLText.ElementAt(id).TranslatedLine)); continue; }
                 lstWriteback.Add(YMLText.ElementAt(id).TranslatedLine);
             }
             File.WriteAllLines("chn\\" + LstFiles.Text, lstWriteback.ToArray(), Encoding.UTF8);
@@ -507,6 +509,26 @@ namespace pdx_ymltranslator
         private void CombOldVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComBLoad();
+        }
+
+        private void FrmTranslator_SizeChanged(object sender, EventArgs e)
+        {
+            DfData.Height = Height - 295;
+            DfData.Width = Width - 215;
+            LstFiles.Height = Height - 295;
+            TxtCHN.Width = Width - 260;
+            TxtENG.Width = Width - 260;
+            TxtLog.Width = Width - 260;
+        }
+
+        private void ChkSimplifiedChinese_CheckedChanged(object sender, EventArgs e)
+        {
+            ChkTraditionalChinese.Checked = false;
+        }
+
+        private void ChkTraditionalChinese_CheckedChanged(object sender, EventArgs e)
+        {
+            ChkSimplifiedChinese.Checked = false;
         }
     }
 }
