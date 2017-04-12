@@ -3,7 +3,7 @@
 Github：https://github.com/inkitter/pdx-ymltranslator
 
 ## V1.5 170411
-目前已经自带合并功能，不再需要Merger。
+目前已经自带合并功能，不再需要Merger。窗口可以调整大小了:)
 ### 准备
 0. 需要安装.NET Framework 4.5。
 1. 把游戏原版的*_l_english.yml放入eng文件夹，注意不要放其他语言版本。
@@ -22,7 +22,7 @@ Github：https://github.com/inkitter/pdx-ymltranslator
 5. Paste API text to Translate 按钮可以直接把API的参考文本复制到翻译文本框。
 6. 因为文本中使用了§这种奇怪的符号来标记字体颜色，输入符号比较麻烦，在右侧提供了Text Color功能，选择文本后点击相应的颜色会自动在文本上加入该颜色代码，不选择文本则只插入§R这种起始，需要在结束处再点击§! 来插入颜色结束。
 7. Open Original 与 Open Translated 用于使用默认文本编辑器打开YMl文件，方便验证文件。
-8. Save 按钮上方 下拉菜单用于选择旧版原文参考，用以对比新旧英文差异。复选框 Only Translated 用于只保存翻译过的文本，不保存未翻译的文本。
+8. Save 按钮上方 下拉菜单用于选择旧版原文参考，用以对比新旧英文差异。复选框 Only Translated 用于只保存翻译过的文本，不保存未翻译的文本。勾选简/繁会进行强制转换后再保存，不勾选则不改变。
 9. Ctrl + ↓ 可以直接跳转到下一个可能需要翻译的行。
 10. Ctrl + ← 可以根据FROM文本框的内容再次查询API，并在下面的文本框显示。
 
