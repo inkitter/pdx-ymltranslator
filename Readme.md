@@ -2,7 +2,7 @@
 # Paradox Interactive YML Translator
 Github：https://github.com/inkitter/pdx-ymltranslator
 
-## V1.5 170411
+## V1.6 170413
 目前已经自带合并功能，不再需要Merger。窗口可以调整大小了:)
 ### 准备
 0. 需要安装.NET Framework 4.5。
