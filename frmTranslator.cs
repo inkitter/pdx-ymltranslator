@@ -278,18 +278,18 @@ namespace pdx_ymltranslator
 
         private async void GetAPITranslation()
         {
-            TxtLog.Clear();
+            TxtAPI.Clear();
             BtnAPItochnBox.Enabled = false;
             Task<string> GetTranslationTask = new Task<string>(FuncAsyncGetTranslation);
             try
             {
                 GetTranslationTask.Start();
-                TxtLog.Text = await GetTranslationTask;
+                TxtAPI.Text = await GetTranslationTask;
                 GetTranslationTask.Dispose();
             }
             catch
             {
-                TxtLog.Text = "Nothing";
+                TxtAPI.Text = "Nothing";
                 GetTranslationTask.Dispose();
             }
             BtnAPItochnBox.Enabled = true;
@@ -333,11 +333,11 @@ namespace pdx_ymltranslator
             }
         }
 
-        private void Logtxtbox_KeyDown(object sender, KeyEventArgs e)
+        private void TxtAPI_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
             {
-                TxtLog.SelectAll();
+                TxtAPI.SelectAll();
             }
         }
 
@@ -346,9 +346,9 @@ namespace pdx_ymltranslator
             TxtCHN.SelectAll();
         }
 
-        private void Logtxtbox_DoubleClick(object sender, EventArgs e)
+        private void TxtAPI_DoubleClick(object sender, EventArgs e)
         {
-            TxtLog.SelectAll();
+            TxtAPI.SelectAll();
         }
 
         private void BtnOpenFile_Click(object sender, EventArgs e)
@@ -381,7 +381,7 @@ namespace pdx_ymltranslator
         }
         private void BtnAPItochnBox_Click(object sender, EventArgs e)
         {
-            TxtCHN.Text = TxtLog.Text;
+            TxtCHN.Text = TxtAPI.Text;
         }
 
         private void Translatorfrm_KeyDown(object sender, KeyEventArgs e)
@@ -518,7 +518,7 @@ namespace pdx_ymltranslator
             LstFiles.Height = Height - 295;
             TxtCHN.Width = Width - 260;
             TxtENG.Width = Width - 260;
-            TxtLog.Width = Width - 260;
+            TxtAPI.Width = Width - 260;
         }
 
         private void ChkSimplifiedChinese_CheckedChanged(object sender, EventArgs e)
@@ -529,6 +529,38 @@ namespace pdx_ymltranslator
         private void ChkTraditionalChinese_CheckedChanged(object sender, EventArgs e)
         {
             ChkSimplifiedChinese.Checked = false;
+        }
+
+        private void TxtFind_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                for (int i = DfData.CurrentRow.Index; i < DfData.RowCount; i++)
+                {
+                    if (i + 1 <= DfData.RowCount - 1)
+                    {
+                        DfData.CurrentCell = DfData[DfData.CurrentCell.ColumnIndex, i + 1];
+                    }
+                    else
+                    {
+                        DfData.CurrentCell = DfData[DfData.CurrentCell.ColumnIndex, 0];
+                    }
+                    if (YMLTools.RegexContainsWord(YMLText.ElementAt(DfData.CurrentRow.Index).VENG,TxtFind.Text)) { break; }
+                }
+            }
+        }
+
+        private void TxtFind_Enter(object sender, EventArgs e)
+        {
+            TxtFind.SelectAll();
+        }
+
+        private void TxtFind_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A && e.Modifiers == Keys.Control)
+            {
+                TxtFind.SelectAll();
+            }
         }
     }
 }

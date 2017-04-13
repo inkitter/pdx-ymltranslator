@@ -25,6 +25,7 @@ Github：https://github.com/inkitter/pdx-ymltranslator
 8. Save 按钮上方 下拉菜单用于选择旧版原文参考，用以对比新旧英文差异。复选框 Only Translated 用于只保存翻译过的文本，不保存未翻译的文本。勾选简/繁会进行强制转换后再保存，不勾选则不改变。
 9. Ctrl + ↓ 可以直接跳转到下一个可能需要翻译的行。
 10. Ctrl + ← 可以根据FROM文本框的内容再次查询API，并在下面的文本框显示。
+11. Save 按钮左边有个文本框，可以快速搜索打开的yml中某个原文中的单词，用于查找同词使翻译一致。输入搜索内容在文本框内按 Enter 即可。
 
 
 ## for HOI4, Stellaris

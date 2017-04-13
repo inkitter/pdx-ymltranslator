@@ -300,6 +300,15 @@ namespace pdx_ymltranslator
             RegText = RegText.Replace(" ", "");
             return RegexGetWith(RegText, "^.*(?=:)");
         }
+        private static string RegexStringWordBoundry(string input)
+        {
+            return @"(\W|^)" + input + @"(\W|$)";
+        }
+        public static bool RegexContainsWord(string input, string WordToMatch)
+        {
+            if (Regex.IsMatch(input, RegexStringWordBoundry(WordToMatch), RegexOptions.IgnoreCase)) { return true; }
+            return false;
+        }
         // 用于截取
 
         public static void OpenWithBrowser(string TextToTranslate,string APIEngine)
@@ -344,7 +353,7 @@ namespace pdx_ymltranslator
         {
             foreach (KeyValuePair<string, string> kvp in dict)
             {
-                Regex rgx = new Regex(@"(\W|^)" + kvp.Key + @"(\W|$)", RegexOptions.IgnoreCase);
+                Regex rgx = new Regex(RegexStringWordBoundry(kvp.Key), RegexOptions.IgnoreCase);
                 input = rgx.Replace(input, " "+kvp.Key + "<" + kvp.Value + "> ");
             }
             return input;

@@ -31,7 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTranslator));
-            this.TxtLog = new System.Windows.Forms.TextBox();
+            this.TxtAPI = new System.Windows.Forms.TextBox();
             this.BtnSave = new System.Windows.Forms.Button();
             this.LstFiles = new System.Windows.Forms.ListBox();
             this.LabFROM = new System.Windows.Forms.Label();
@@ -65,24 +65,25 @@
             this.ChkSaveOnlyTranslated = new System.Windows.Forms.CheckBox();
             this.ChkSimplifiedChinese = new System.Windows.Forms.CheckBox();
             this.ChkTraditionalChinese = new System.Windows.Forms.CheckBox();
+            this.TxtFind = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DfData)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // TxtLog
+            // TxtAPI
             // 
-            this.TxtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TxtLog.Font = new System.Drawing.Font("宋体", 10F);
-            this.TxtLog.Location = new System.Drawing.Point(3, 720);
-            this.TxtLog.Multiline = true;
-            this.TxtLog.Name = "TxtLog";
-            this.TxtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TxtLog.Size = new System.Drawing.Size(840, 80);
-            this.TxtLog.TabIndex = 3;
-            this.TxtLog.TabStop = false;
-            this.TxtLog.Text = "Baidu API";
-            this.TxtLog.DoubleClick += new System.EventHandler(this.Logtxtbox_DoubleClick);
-            this.TxtLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Logtxtbox_KeyDown);
+            this.TxtAPI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.TxtAPI.Font = new System.Drawing.Font("宋体", 10F);
+            this.TxtAPI.Location = new System.Drawing.Point(3, 720);
+            this.TxtAPI.Multiline = true;
+            this.TxtAPI.Name = "TxtAPI";
+            this.TxtAPI.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TxtAPI.Size = new System.Drawing.Size(840, 80);
+            this.TxtAPI.TabIndex = 3;
+            this.TxtAPI.TabStop = false;
+            this.TxtAPI.Text = "Baidu API";
+            this.TxtAPI.DoubleClick += new System.EventHandler(this.TxtAPI_DoubleClick);
+            this.TxtAPI.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtAPI_KeyDown);
             // 
             // BtnSave
             // 
@@ -516,6 +517,7 @@
             // 
             // ChkSimplifiedChinese
             // 
+            this.ChkSimplifiedChinese.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ChkSimplifiedChinese.AutoSize = true;
             this.ChkSimplifiedChinese.Location = new System.Drawing.Point(948, 768);
             this.ChkSimplifiedChinese.Name = "ChkSimplifiedChinese";
@@ -527,6 +529,7 @@
             // 
             // ChkTraditionalChinese
             // 
+            this.ChkTraditionalChinese.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ChkTraditionalChinese.AutoSize = true;
             this.ChkTraditionalChinese.Location = new System.Drawing.Point(948, 783);
             this.ChkTraditionalChinese.Name = "ChkTraditionalChinese";
@@ -536,11 +539,27 @@
             this.ChkTraditionalChinese.UseVisualStyleBackColor = true;
             this.ChkTraditionalChinese.CheckedChanged += new System.EventHandler(this.ChkTraditionalChinese_CheckedChanged);
             // 
+            // TxtFind
+            // 
+            this.TxtFind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.TxtFind.Font = new System.Drawing.Font("宋体", 10F);
+            this.TxtFind.Location = new System.Drawing.Point(848, 776);
+            this.TxtFind.Name = "TxtFind";
+            this.TxtFind.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TxtFind.Size = new System.Drawing.Size(95, 23);
+            this.TxtFind.TabIndex = 38;
+            this.TxtFind.Text = "Find in Eng";
+            this.TxtFind.WordWrap = false;
+            this.TxtFind.Enter += new System.EventHandler(this.TxtFind_Enter);
+            this.TxtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtFind_KeyDown);
+            this.TxtFind.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtFind_KeyUp);
+            // 
             // FrmTranslator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 801);
+            this.Controls.Add(this.TxtFind);
             this.Controls.Add(this.ChkTraditionalChinese);
             this.Controls.Add(this.ChkSimplifiedChinese);
             this.Controls.Add(this.ChkSaveOnlyTranslated);
@@ -562,7 +581,7 @@
             this.Controls.Add(this.LabFROM);
             this.Controls.Add(this.LstFiles);
             this.Controls.Add(this.BtnSave);
-            this.Controls.Add(this.TxtLog);
+            this.Controls.Add(this.TxtAPI);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "FrmTranslator";
@@ -581,7 +600,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox TxtLog;
+        private System.Windows.Forms.TextBox TxtAPI;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.ListBox LstFiles;
         private System.Windows.Forms.Label LabFROM;
@@ -615,6 +634,7 @@
         private System.Windows.Forms.CheckBox ChkSaveOnlyTranslated;
         private System.Windows.Forms.CheckBox ChkSimplifiedChinese;
         private System.Windows.Forms.CheckBox ChkTraditionalChinese;
+        private System.Windows.Forms.TextBox TxtFind;
     }
 }
 
