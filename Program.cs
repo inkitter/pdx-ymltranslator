@@ -217,7 +217,18 @@ namespace pdx_ymltranslator
         }
         public bool SameInToAndFrom()
         {
-            if (IsEditable()&&veng == vchn) { return true; }
+            if (IsEditable()&&veng == vchn && veng!="") { return true; }
+            return false;
+        }
+        public bool IsAllQoute()
+        {
+            if (veng != "")
+            {
+                string first = YMLTools.RemoveSpace(veng).Substring(0, 1);
+                string end = YMLTools.RemoveSpace(veng).Substring(YMLTools.RemoveSpace(veng).Length - 1);
+                if (first == "$" & end == "$") { return true; }
+                if (first == "[" & end == "]") { return true; }
+            }
             return false;
         }
         public bool OldNewisDifferent()

@@ -229,7 +229,7 @@ namespace pdx_ymltranslator
                 }
                 if (YMLText.ElementAt(row.Index).SameInToAndFrom())
                 {
-                    row.Cells[2].Style.BackColor = Color.LightCyan;
+                    if (YMLText.ElementAt(row.Index).IsAllQoute() == false) { row.Cells[2].Style.BackColor = Color.LightCyan; }   
                 }
             }
         }
@@ -413,7 +413,10 @@ namespace pdx_ymltranslator
                     {
                         DfData.CurrentCell = DfData[DfData.CurrentCell.ColumnIndex, 0];
                     }
-                    if (YMLText.ElementAt(DfData.CurrentRow.Index).SameInToAndFrom()) { Showintxt(DfData.CurrentRow.Index); break; }
+                    if (YMLText.ElementAt(DfData.CurrentRow.Index).SameInToAndFrom())
+                    {
+                        if (YMLText.ElementAt(DfData.CurrentRow.Index).IsAllQoute() == false) { Showintxt(DfData.CurrentRow.Index); break; }
+                    }
                 }
             }
         }
