@@ -10,6 +10,15 @@ using System.IO;
 
 namespace pdx_ymltranslator
 {
+    static class StaticVars
+    {
+        public const string UserDictCSV = "ymldict.csv";
+        public const string DirOldBase = "old\\";
+        public const string DIRCN = "chn\\";
+        public const string DIRCNen = "chn\\english\\";
+        public const string DIRCNcn = "chn\\simp_chinese\\";
+        public const string DIREN = "eng\\";
+    }
     static class Program
     {
         /// <summary>
@@ -455,20 +464,43 @@ namespace pdx_ymltranslator
                 return finfo;
             }
 
-            finfo.FileName = finfo.FileName.Replace("l_english", "l_simp_chinese");
+            finfo.FileName = finfo.FileName.Replace("english.yml", "l_simp_chinese.yml");
             if (File.Exists(finfo.FileName))
             {
                 finfo.IsExist = true;
                 return finfo;
             }
 
-            finfo.FileName = finfo.FileName.Replace("l_simp_chinese", "l_english");
+            finfo.FileName = finfo.FileName.Replace("l_simp_chinese.yml", "l_english.yml");
             if (File.Exists(finfo.FileName))
             {
                 finfo.IsExist = true;
                 return finfo;
             }
+            finfo.FileName = filename;
             return finfo;
+        }
+
+        public static List<YML> ReadFile(string filename)
+        {
+            string EngPath = StaticVars.DIREN + filename;
+            string ChnPath = StaticVars.DIRCNen + filename;
+
+            FileExistInfo finfo = IsFileExistInfo(ChnPath);
+            if (!finfo.IsExist)
+            {
+                FileStream fs = File.Create(ChnPath);
+                Byte[] info = new UTF8Encoding(true).GetBytes("l_english:");
+                fs.Write(info, 0, info.Length);
+                fs.Close();
+            }
+            // 检测chn文件夹内文件是否存在，不存在则建立。
+
+            List<string> listEng = new List<string>(File.ReadAllLines(EngPath));
+            if (EngPath.Contains("simp_chinese.yml")) { ChnPath = ChnPath.Replace("simp_chinese.yml", "english.yml"); }
+            List<string> listChn = new List<string>(File.ReadAllLines(ChnPath));
+
+            return BuildYMLList(listEng, listChn);
         }
     }
 

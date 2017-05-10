@@ -66,6 +66,8 @@
             this.ChkSimplifiedChinese = new System.Windows.Forms.CheckBox();
             this.ChkTraditionalChinese = new System.Windows.Forms.CheckBox();
             this.TxtFind = new System.Windows.Forms.TextBox();
+            this.BtnAllToSimpChn = new System.Windows.Forms.Button();
+            this.BtnMergeAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DfData)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -109,6 +111,9 @@
             this.LstFiles.TabIndex = 4;
             this.LstFiles.TabStop = false;
             this.LstFiles.SelectedIndexChanged += new System.EventHandler(this.LstFiles_SelectedIndexChanged);
+            this.LstFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LstFiles_KeyDown);
+            this.LstFiles.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LstFiles_KeyPress);
+            this.LstFiles.KeyUp += new System.Windows.Forms.KeyEventHandler(this.LstFiles_KeyUp);
             // 
             // LabFROM
             // 
@@ -456,7 +461,7 @@
             this.groupBox1.Controls.Add(this.LabColorR);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox1.Location = new System.Drawing.Point(958, 645);
+            this.groupBox1.Location = new System.Drawing.Point(969, 636);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(0);
@@ -483,7 +488,7 @@
             this.LabHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LabHelp.AutoSize = true;
             this.LabHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.LabHelp.Location = new System.Drawing.Point(1037, 703);
+            this.LabHelp.Location = new System.Drawing.Point(937, 636);
             this.LabHelp.Name = "LabHelp";
             this.LabHelp.Size = new System.Drawing.Size(29, 12);
             this.LabHelp.TabIndex = 33;
@@ -554,11 +559,35 @@
             this.TxtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtFind_KeyDown);
             this.TxtFind.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TxtFind_KeyUp);
             // 
+            // BtnAllToSimpChn
+            // 
+            this.BtnAllToSimpChn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnAllToSimpChn.Location = new System.Drawing.Point(1050, 691);
+            this.BtnAllToSimpChn.Name = "BtnAllToSimpChn";
+            this.BtnAllToSimpChn.Size = new System.Drawing.Size(32, 23);
+            this.BtnAllToSimpChn.TabIndex = 39;
+            this.BtnAllToSimpChn.Text = "SC";
+            this.BtnAllToSimpChn.UseVisualStyleBackColor = true;
+            this.BtnAllToSimpChn.Click += new System.EventHandler(this.BtnAllToSimpChn_Click);
+            // 
+            // BtnMergeAll
+            // 
+            this.BtnMergeAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnMergeAll.Location = new System.Drawing.Point(993, 690);
+            this.BtnMergeAll.Name = "BtnMergeAll";
+            this.BtnMergeAll.Size = new System.Drawing.Size(45, 23);
+            this.BtnMergeAll.TabIndex = 40;
+            this.BtnMergeAll.Text = "Merge";
+            this.BtnMergeAll.UseVisualStyleBackColor = true;
+            this.BtnMergeAll.Click += new System.EventHandler(this.BtnMergeAll_Click);
+            // 
             // FrmTranslator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 801);
+            this.Controls.Add(this.BtnMergeAll);
+            this.Controls.Add(this.BtnAllToSimpChn);
             this.Controls.Add(this.TxtFind);
             this.Controls.Add(this.ChkTraditionalChinese);
             this.Controls.Add(this.ChkSimplifiedChinese);
@@ -635,6 +664,8 @@
         private System.Windows.Forms.CheckBox ChkSimplifiedChinese;
         private System.Windows.Forms.CheckBox ChkTraditionalChinese;
         private System.Windows.Forms.TextBox TxtFind;
+        private System.Windows.Forms.Button BtnAllToSimpChn;
+        private System.Windows.Forms.Button BtnMergeAll;
     }
 }
 
