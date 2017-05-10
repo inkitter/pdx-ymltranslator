@@ -14,6 +14,7 @@ namespace pdx_ymltranslator
     {
         private void Mainfrm_Load(object sender, EventArgs e)
         {
+            FormInit();
             FunRefresh();
             UserDictInitialize();
             SetToolTip();
@@ -28,6 +29,7 @@ namespace pdx_ymltranslator
             ToolTiptt.ReshowDelay = 200;
             ToolTiptt.SetToolTip(LabHelp, "Double Click: Open Github Web \n https://github.com/inkitter/pdx-ymltranslator \n Ctrl + ↓: Find Line to Translate \n Ctrl + ←: Refresh API Textbox");
         }
+
         private void ComBOldVersionInitialize()
         {
             CombOldVersion.Enabled = false;
@@ -57,6 +59,7 @@ namespace pdx_ymltranslator
             }
             DfRefresh();
             CombOldVersion.Enabled = true;
+            DfData.Columns[3].HeaderText = CombOldVersion.Text;
         }
 
         private void BuildOldVersionDict()
@@ -74,17 +77,99 @@ namespace pdx_ymltranslator
                 OldVersionDict=YMLTools.BuildDictionary(ListForDict);
             }
         }
+        private void UserDictInitialize()
+        {
+            if (!File.Exists(UserDictCSV))
+            {
+                return;
+            }
+            var reader = new StreamReader(File.OpenRead(UserDictCSV), Encoding.UTF8, true);
+            try
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+
+                    if (!String.IsNullOrEmpty(values[0]) && !String.IsNullOrEmpty(values[1]))
+                    {
+                        UserDict.Add(values[0].ToLower(), values[1]);
+                    }
+                }
+            }
+            catch { }
+            reader.Close();
+        }
+
+        List<string> listEng;
+        List<string> listChn;
+        List<YML> YMLText;
+        Dictionary<string, string> UserDict = new Dictionary<string, string>();
+        Dictionary<string,string> OldVersionDict=new Dictionary<string, string>();
+        ToolTip ToolTiptt = new ToolTip();
+        const string UserDictCSV = "ymldict.csv";
+        const string DirOldBase = "old\\";
+        const string DIRCN = "chn\\";
+        const string DIRCNen = "chn\\english\\";
+        const string DIRCNcn = "chn\\simp_chinese\\";
+        const string DIREN = "eng\\";
+
+        private void BtnSave_Click(object sender, EventArgs e) { FuncSave(); }
+        private void FuncSave()
+        {
+            List<string> lstWriteback = new List<string>();
+            
+            for (int id = 0; id < YMLText.Count ; id++)
+            {
+                if (ChkSaveOnlyTranslated.Checked == true && YMLText.ElementAt(id).SameInToAndFrom()) { continue; }
+                if (ChkSimplifiedChinese.Checked == true) { lstWriteback.Add(YMLTools.ToSimplifiedChinese(YMLText.ElementAt(id).TranslatedLine)); continue; }
+                if (ChkTraditionalChinese.Checked == true) { lstWriteback.Add(YMLTools.ToTraditionalChinese(YMLText.ElementAt(id).TranslatedLine)); continue; }
+                lstWriteback.Add(YMLText.ElementAt(id).TranslatedLine);
+            }
+
+            lstWriteback.Insert(0, "l_english:");
+            lstWriteback.RemoveAt(1);
+            File.WriteAllLines(DIRCNen + LstFiles.Text.Replace("l_simp_chinese","l_english" ), lstWriteback.ToArray(), Encoding.UTF8);
+
+            lstWriteback.Insert(0, "l_simp_chinese:");
+            lstWriteback.RemoveAt(1);
+            File.WriteAllLines(DIRCNcn + LstFiles.Text.Replace("l_english", "l_simp_chinese"), lstWriteback.ToArray(), Encoding.UTF8);
+            BtnSave.Enabled = false;
+            // 保存文件
+        }
+
+        private void LstFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (LstFiles.Enabled == true)
+            {
+                ReadFile();
+                LoadtoDataGrid();
+                if (OldVersionDict.Count > 0) { ComBLoad(); }
+            }
+        }
+
+        private void FormInit()
+        {
+            if (!Directory.Exists(DIREN))
+            {
+                Directory.CreateDirectory(DIREN);
+            }
+            if (!Directory.Exists(DIRCN))
+            {
+                Directory.CreateDirectory(DIRCN);
+            }
+            if (!Directory.Exists(DIRCNen))
+            {
+                Directory.CreateDirectory(DIRCNen);
+            }
+            if (!Directory.Exists(DIRCNcn))
+            {
+                Directory.CreateDirectory(DIRCNcn);
+            }
+        }
         private void FunRefresh()
         {
-            if (!Directory.Exists("eng\\"))
-            {
-                Directory.CreateDirectory("eng\\");
-            }
-            if (!Directory.Exists("chn\\"))
-            {
-                Directory.CreateDirectory("chn\\");
-            }
-            string[] stringList = Directory.GetFiles("eng\\", "*.yml");
+            string[] stringList = Directory.GetFiles(DIREN, "*.yml");
 
             if (stringList.Length > 0)
             {
@@ -104,76 +189,13 @@ namespace pdx_ymltranslator
             }
         }
 
-        List<string> listEng;
-        List<string> listChn;
-        List<YML> YMLText;
-        Dictionary<string, string> UserDict = new Dictionary<string, string>();
-        Dictionary<string,string> OldVersionDict=new Dictionary<string, string>();
-        ToolTip ToolTiptt = new ToolTip();
-        const string UserDictCSV = "ymldict.csv";
-        const string DirOldBase = "old\\";
-
-        private void UserDictInitialize()
-        {
-            if (!File.Exists(UserDictCSV))
-            {
-                return;
-            }
-            var reader = new StreamReader(File.OpenRead(UserDictCSV),Encoding.UTF8, true);
-            try
-            {
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-
-                    if (!String.IsNullOrEmpty(values[0]) && !String.IsNullOrEmpty(values[1]))
-                    {
-                        UserDict.Add(values[0].ToLower(), values[1]);
-                    }
-                }
-            }
-            catch { }
-            reader.Close();
-        }
-
-        private void BtnSave_Click(object sender, EventArgs e)
-        {
-            FuncSave();
-        }
-
-        private void FuncSave()
-        {
-            List<string> lstWriteback = new List<string>();
-            
-            for (int id = 0; id < YMLText.Count ; id++)
-            {
-                if (ChkSaveOnlyTranslated.Checked == true && YMLText.ElementAt(id).SameInToAndFrom()) { continue; }
-                if (ChkSimplifiedChinese.Checked == true) { lstWriteback.Add(YMLTools.ToSimplifiedChinese(YMLText.ElementAt(id).TranslatedLine)); continue; }
-                if (ChkTraditionalChinese.Checked == true) { lstWriteback.Add(YMLTools.ToTraditionalChinese(YMLText.ElementAt(id).TranslatedLine)); continue; }
-                lstWriteback.Add(YMLText.ElementAt(id).TranslatedLine);
-            }
-            File.WriteAllLines("chn\\" + LstFiles.Text, lstWriteback.ToArray(), Encoding.UTF8);
-            BtnSave.Enabled = false;
-            // 保存文件
-        }
-
-        private void LstFiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (LstFiles.Enabled == true)
-            {
-                ReadFile();
-                LoadtoDataGrid();
-                if (OldVersionDict.Count > 0) { ComBLoad(); }
-            }
-        }
-
         private void ReadFile()
         {
-            string EngPath = "eng\\" + LstFiles.Text;
-            string ChnPath = "chn\\" + LstFiles.Text;
+            string EngPath = DIREN + LstFiles.Text;
+            string ChnPath = DIRCNen + LstFiles.Text;
 
-            if (!File.Exists(ChnPath))
+            FileExistInfo finfo = YMLTools.IsFileExistInfo(ChnPath);
+            if (!finfo.IsExist)
             {
                 FileStream fs = File.Create(ChnPath);
                 Byte[] info = new UTF8Encoding(true).GetBytes("l_english:");
@@ -183,10 +205,13 @@ namespace pdx_ymltranslator
             // 检测chn文件夹内文件是否存在，不存在则建立。
 
             listEng = new List<string>(File.ReadAllLines(EngPath));
+            if (EngPath.Contains("simp_chinese")) { ChnPath=ChnPath.Replace("simp_chinese", "english"); }
             listChn = new List<string>(File.ReadAllLines(ChnPath));
 
             YMLText=YMLTools.BuildYMLList(listEng, listChn);
         }
+
+        
 
         private void LoadtoDataGrid()
         {
@@ -205,8 +230,9 @@ namespace pdx_ymltranslator
             DfData.Columns[0].HeaderText = "Variable Name";
             DfData.Columns[1].HeaderText = "FROM";
             DfData.Columns[2].HeaderText = "To";
-            DfData.Columns[3].HeaderText = "Save Line Preview";
-            DfData.Columns[4].HeaderText = "Line in Old Version";
+            DfData.Columns[3].HeaderText = CombOldVersion.Text;
+            DfData.Columns[4].HeaderText = "Save Line Preview";
+            
 
             // 寻找原文与译文内容一致的，标记颜色，醒目便于确认需要翻译的部分。
             DfRefresh();
@@ -254,13 +280,15 @@ namespace pdx_ymltranslator
 
         private void Showintxt(int id)
         {
+            string engtext = YMLText.ElementAt(id).VENG;
+            if (engtext == "") { engtext = YMLText.ElementAt(id).OldENG; }
             if (UserDict.Count>0)
             {
-                TxtENG.Text = YMLTools.ReplaceWithUserDict(YMLText.ElementAt(id).VENG, UserDict);
+                TxtENG.Text = YMLTools.ReplaceWithUserDict(engtext, UserDict);
             }
             else
             {
-                TxtENG.Text = YMLText.ElementAt(id).VENG;
+                TxtENG.Text = engtext;
             }
 
             TxtCHN.Text = YMLText.ElementAt(id).VCHN;

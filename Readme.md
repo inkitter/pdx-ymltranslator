@@ -2,17 +2,17 @@
 # Paradox Interactive YML Translator
 Github：https://github.com/inkitter/pdx-ymltranslator
 
-## V1.6 170413
-目前已经自带合并功能，不再需要Merger。窗口可以调整大小了:)
-### 准备
-0. 需要安装.NET Framework 4.5。
-1. 把游戏原版的*_l_english.yml放入eng文件夹，注意不要放其他语言版本。
-2. 将翻译过的yml文件放入chn文件夹。
-3. 如果需要自定义词典，需将 ymldict.csv 文件放入程序目录。
-4. 如果需要对比旧版原文的功能，将旧版的 yml 文件放入 old\[某目录]\ 之中。release包内已有群星1.4.1和钢铁雄心1.3.3的原文本。不需要则删除old文件夹即可（此功能可能导致程序错误或者性能低下）。
-5. 确认以上步骤，即可运行 pdx-ymltranslator.exe。
+> 需要安装.NET Framework 4.5。
 
-### 使用
+## 目前版本： V1.7 170510
+* old文件夹中是旧版的文本，因群星1.6加入了官中文本，分为 en-1.6 及 cn-1.6 两个。
+* eng是原版文本，可以放入 yml 文件。
+* chn文件夹是翻译之后的文本，目前程序会读取位于 chn\english\*.yml 作为初始载入的已翻译文本，但是保存时候会自动生成并保存在 chn\english\ 和 chn\simp_chinese 两个目录里。且 chn\simp_chinese 目录中文件首行会变为 l_simp_chinese:。
+* 建议灵活使用 `mklink` 命令，诸如 `mklink /j chn "chnLocal\localisation"` 来建立文件夹链接，方便文本的翻译与统一。
+
+
+### 详细说明
+* 如果需要自定义词典，需将 ymldict.csv 文件放入程序目录。
 
 1. 窗口上半部分：左侧文件列表选择文件，右侧会显示文件内容。已经截取了变量名与文本内容，选择后会显示在下方文本框。
 2. 颜色标记：①可能要翻译的部分会标记浅蓝色。②如果启用了旧版对比，若新旧英文不同，则会将英文部分标记为橙色。③若为新增文本，则英文部分标记为浅蓝色。

@@ -1,4 +1,4 @@
 rd eng /s /q
 rd chn /s /q
-mklink /j eng "D:\git\stellaris_cn\en\localisation\english"
-mklink /j chn "D:\git\stellaris_cn\cn\localisation\english"
+mklink /j eng "old\st-cn-1.60"
+mklink /j chn "D:\git\stellaris_cn\cn\localisation\"

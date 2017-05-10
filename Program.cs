@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Script.Serialization;
 using System.Collections.Generic;
 using Microsoft.VisualBasic;
+using System.IO;
 
 namespace pdx_ymltranslator
 {
@@ -43,7 +44,7 @@ namespace pdx_ymltranslator
             variablenamewithoutnum = "";
             oldeng = "";
         }
-        public YML(string LineTo)
+        public YML(string LineTo):this()
         {
             LineCHN = LineTo;
             LineENG = "";
@@ -53,7 +54,7 @@ namespace pdx_ymltranslator
             if (HasError()) { FixError(); }
             oldeng = "";
         }
-        public YML(string LineFrom, Dictionary<string, string> DictForTo)
+        public YML(string LineFrom, Dictionary<string, string> DictForTo):this()
         {
             LineENG = LineFrom;
             variablename = YMLTools.RegexGetName(LineFrom);
@@ -112,7 +113,11 @@ namespace pdx_ymltranslator
                 return vchn;
             }
         }
-        
+        public string OldENG
+        {
+            get { return oldeng; }
+        }
+
         public string TranslatedLine
         {
             get
@@ -122,10 +127,7 @@ namespace pdx_ymltranslator
                 else { return linechn; }
             }
         }
-        public string OldENG
-        {
-            get { return oldeng; }
-        }
+        
         private string LineENG
         {
             get { return lineeng; }
@@ -222,12 +224,22 @@ namespace pdx_ymltranslator
         }
         public bool IsAllQoute()
         {
-            if (veng != "")
+            return IsAllQoute(veng);
+        }
+        public bool IsAllQoute(string text)
+        {
+            if (text != "")
             {
-                string first = YMLTools.RemoveSpace(veng).Substring(0, 1);
-                string end = YMLTools.RemoveSpace(veng).Substring(YMLTools.RemoveSpace(veng).Length - 1);
-                if (first == "$" & end == "$") { return true; }
-                if (first == "[" & end == "]") { return true; }
+                text = YMLTools.RemoveSpace(text);
+                string first = text.Substring(0, 1);
+                string end = text.Substring(text.Length - 1);
+                if (first == "$" && end == "$") { return true; }
+                if (first == "[" && end == "]") { return true; }
+
+                //if (first == "§" && text.Substring(text.Length - 2) == "§!")
+                //{
+                //    if (IsAllQoute(YMLTools.RegexRemoveColorSign(text))) { return true; }
+                //}
             }
             return false;
         }
@@ -236,12 +248,6 @@ namespace pdx_ymltranslator
             if (YMLTools.RemoveSpace(oldeng) == YMLTools.RemoveSpace(veng)) { return false;  }
             return true;
         }
-    }
-
-    public class Translation
-    {
-        public string Src { get; set; }
-        public string Dst { get; set; }
     }
 
     public class TranslationResultVIP
@@ -262,6 +268,24 @@ namespace pdx_ymltranslator
         //public string From { get; set; }
         //public string To { get; set; }
         public Translation[] Data { get; set; }
+    }
+
+    public class Translation
+    {
+        public string Src { get; set; }
+        public string Dst { get; set; }
+    }
+
+    public class FileExistInfo
+    {
+        public bool IsExist { get; set; }
+        public string FileName { get; set; }
+    }
+
+    public class LoadedFileInfo
+    {
+        public bool IsTranslationExist { get; set; }
+        public string FileName { get; set; }
     }
 
     public static class YMLTools
@@ -310,6 +334,10 @@ namespace pdx_ymltranslator
         {
             RegText = RegText.Replace(" ", "");
             return RegexGetWith(RegText, "^.*(?=:)");
+        }
+        public static string RegexRemoveColorSign(string RegText)
+        {
+            return RegexGetWith(RegText, "(?<=(§.)).+(?=(§!))");
         }
         private static string RegexStringWordBoundry(string input)
         {
@@ -415,6 +443,32 @@ namespace pdx_ymltranslator
         public static string ToTraditionalChinese(string s)
         {
             return Strings.StrConv(s, VbStrConv.TraditionalChinese, 0);
+        }
+
+        public static FileExistInfo IsFileExistInfo(string filename)
+        {
+            FileExistInfo finfo = new FileExistInfo() { FileName = filename, IsExist = false };
+
+            if (File.Exists(finfo.FileName))
+            {
+                finfo.IsExist = true;
+                return finfo;
+            }
+
+            finfo.FileName = finfo.FileName.Replace("l_english", "l_simp_chinese");
+            if (File.Exists(finfo.FileName))
+            {
+                finfo.IsExist = true;
+                return finfo;
+            }
+
+            finfo.FileName = finfo.FileName.Replace("l_simp_chinese", "l_english");
+            if (File.Exists(finfo.FileName))
+            {
+                finfo.IsExist = true;
+                return finfo;
+            }
+            return finfo;
         }
     }
 
