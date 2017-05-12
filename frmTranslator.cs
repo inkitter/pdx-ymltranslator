@@ -132,12 +132,25 @@ namespace pdx_ymltranslator
         private void WriteEngFile(List<string> lstWriteback)
         {
             lstWriteback[0] = lstWriteback[0].Replace("l_simp_chinese", "l_english");
-            File.WriteAllLines(StaticVars.DIRCNen + LstFiles.Text.Replace("l_simp_chinese", "l_english"), lstWriteback.ToArray(), Encoding.UTF8);
+            File.WriteAllText(StaticVars.DIRCNen + LstFiles.Text.Replace("l_simp_chinese", "l_english"), BuildWritebackString(lstWriteback.ToArray()), Encoding.UTF8);
         }
         private void WriteChnFile(List<string> lstWriteback)
         {
             lstWriteback[0]=lstWriteback[0].Replace("l_english", "l_simp_chinese");
-            File.WriteAllLines(StaticVars.DIRCNcn + LstFiles.Text.Replace("l_english", "l_simp_chinese"), lstWriteback.ToArray(), Encoding.UTF8);
+            File.WriteAllText(StaticVars.DIRCNcn + LstFiles.Text.Replace("l_english", "l_simp_chinese"), BuildWritebackString(lstWriteback.ToArray()), Encoding.UTF8);
+        }
+        private string BuildWritebackString(string[] a)
+        {
+            var builder = new StringBuilder();
+            if (ChkCRLF.Checked == false)
+            {
+                foreach (string line in a) { builder.Append(line + "\n"); }
+            }
+            else
+            {
+                foreach (string line in a) { builder.Append(line + "\r\n"); }
+            }
+            return builder.ToString();
         }
 
         private void LstFiles_SelectedIndexChanged(object sender, EventArgs e)
@@ -363,12 +376,12 @@ namespace pdx_ymltranslator
 
         private void BtnOpenFile_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("chn\\" + LstFiles.Text);
+            System.Diagnostics.Process.Start(StaticVars.DIRCNen + LstFiles.Text);
         }
 
         private void BtnOpenFileOriginal_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("eng\\" + LstFiles.Text);
+            System.Diagnostics.Process.Start(StaticVars.DIREN + LstFiles.Text);
         }
         private void TxtCHN_KeyPress(object sender, KeyPressEventArgs e)
         {

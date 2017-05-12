@@ -4,15 +4,15 @@ Github：https://github.com/inkitter/pdx-ymltranslator
 
 > 需要安装.NET Framework 4.5。
 
-## 目前版本： V1.7.1 170510
+## 目前版本： V1.7.2 170510
+  
 * old文件夹中是旧版的文本，因群星1.6加入了官中文本，分为 en-1.6 及 cn-1.6 两个。
 * eng是原版文本，可以放入 yml 文件。
 * chn文件夹是翻译之后的文本，目前程序会读取位于 chn\english\*.yml 作为初始载入的已翻译文本，但是保存时候会自动生成并保存在 chn\english\ 和 chn\simp_chinese 两个目录里。且 chn\simp_chinese 目录中文件首行会变为 l_simp_chinese:。
 * 建议灵活使用 `mklink` 命令，诸如 `mklink /j chn "chnLocal\localisation"` 来建立文件夹链接，方便文本的翻译与统一。
 
 ### 更新内容
-1. 增加了 Merge 与 CN 两个按钮，都是对文件列表中的全部文件进行操作的。 Merge 按钮会合并所有文件，并保存在 chn\english 中。 CN 按钮会将所有 english 的文件转存为 simp_chinese，并保存在 simp_chinese 文件夹。
-2. 修复几个1.7更新带来的bug。
+1. 换行符默认存为LF（"\n"），可选CRLF（"\r\n"）。
 
 
 ### 详细说明
@@ -30,7 +30,7 @@ Github：https://github.com/inkitter/pdx-ymltranslator
 9. Ctrl + ↓ 可以直接跳转到下一个可能需要翻译的行。
 10. Ctrl + ← 可以根据FROM文本框的内容再次查询API，并在下面的文本框显示。
 11. Save 按钮左边有个文本框，可以快速搜索打开的yml中某个原文中的单词，用于查找同词使翻译一致。输入搜索内容在文本框内按 Enter 即可。
-
+1. [1.7.1]增加了 Merge 与 CN 两个按钮，都是对文件列表中的全部文件进行操作的。 Merge 按钮会合并所有文件，并保存在 chn\english 中。 CN 按钮会将所有 english 的文件转存为 simp_chinese，并保存在 simp_chinese 文件夹。
 
 ## for HOI4, Stellaris
 
