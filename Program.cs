@@ -240,10 +240,13 @@ namespace pdx_ymltranslator
             if (text != "")
             {
                 text = YMLTools.RemoveSpace(text);
-                string first = text.Substring(0, 1);
-                string end = text.Substring(text.Length - 1);
-                if (first == "$" && end == "$") { return true; }
-                if (first == "[" && end == "]") { return true; }
+                if (text.Length > 0)
+                {
+                    string first = text.Substring(0, 1);
+                    string end = text.Substring(text.Length - 1);
+                    if (first == "$" && end == "$") { return true; }
+                    if (first == "[" && end == "]") { return true; }
+                }
 
                 //if (first == "§" && text.Substring(text.Length - 2) == "§!")
                 //{
