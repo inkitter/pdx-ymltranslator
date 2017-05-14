@@ -194,8 +194,10 @@ namespace pdx_ymltranslator
 
         private bool IsComment()
         {
-            try { if (LineCHN.Replace(" ", "").Substring(0, 1) == "#") { return true; } }
-            catch { }
+            if (YMLTools.RemoveSpace(LineCHN).Length > 0)
+            {
+                if (YMLTools.RemoveSpace(LineCHN).Substring(0, 1) == "#") { return true; }
+            }
             return false;
         }
         private bool IsSpaceLine()
@@ -206,7 +208,7 @@ namespace pdx_ymltranslator
         public bool IsEditable()
         {
             if (IsSpaceLine()) { return false; }
-            if (LineCHN.Replace(" ", "") == "l_english:") { return false; }
+            if (YMLTools.RemoveSpace(LineCHN) == "l_english:") { return false; }
             if (IsComment()) { return false; }
             return true;
         }
