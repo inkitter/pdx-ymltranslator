@@ -539,12 +539,13 @@ namespace pdx_ymltranslator
 
         private void FrmTranslator_SizeChanged(object sender, EventArgs e)
         {
-            DfData.Height = Height - 295;
-            DfData.Width = Width - 215;
-            LstFiles.Height = Height - 295;
-            TxtCHN.Width = Width - 260;
-            TxtENG.Width = Width - 260;
-            TxtAPI.Width = Width - 260;
+            this.DfData.Height = this.Height - 395;
+            this.DfData.Width = this.Width - 280;
+            this.LstFiles.Height = this.Height - 390;
+            this.panel1.Location = new System.Drawing.Point(4, this.Height - 380);
+            this.TxtCHN.Width = this.Width - 360;
+            this.TxtENG.Width = this.Width - 360;
+            this.TxtAPI.Width = this.Width - 360;
         }
 
         private void ChkSimplifiedChinese_CheckedChanged(object sender, EventArgs e)

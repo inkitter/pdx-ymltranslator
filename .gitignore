@@ -1,5 +1,6 @@
 /.vs/*
 /obj/*
+/Debug/*
 /release/chn/*
 /release/eng/*
 /packages/Newtonsoft.Json.9.0.1
